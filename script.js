@@ -64,20 +64,33 @@ function escapeHtml(s) {
     .replaceAll(">", "&gt;");
 }
 
-async function sendToWorker(text) {
+async function sendToWorker() {
   const { proxyUrl } = cfg();
   if (!proxyUrl) throw new Error("Proxy not configured (proxyUrl missing)");
 
-  const res = await fetch(cfg().proxyUrl + "/lead", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ name, phone, email, message })
-});
+  const firstName = $("#firstName").value.trim();
+  const lastName  = $("#lastName").value.trim();
+  const email     = $("#email").value.trim();
+  const message   = $("#message").value.trim();
 
+  // телефон: что реально есть
+  const phoneRaw = phoneInput ? phoneInput.value.trim() : "";
+  const phoneE164 = iti ? iti.getNumber() : ""; // intl-tel-input
+  const phone = (phoneE164 || phoneRaw).trim();
+
+  const name = `${firstName} ${lastName}`.trim();
+
+  const payload = { name, phone, email, message };
+
+  const res = await fetch(proxyUrl.replace(/\/$/, "") + "/lead", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
 
   const j = await res.json().catch(() => ({}));
   if (!res.ok || j.ok === false) {
-    throw new Error(j.description || j.error || "Worker/Telegram error");
+    throw new Error(j.error || j.description || `HTTP ${res.status}`);
   }
   return j;
 }
