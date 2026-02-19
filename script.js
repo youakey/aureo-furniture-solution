@@ -68,11 +68,12 @@ async function sendToWorker(text) {
   const { proxyUrl } = cfg();
   if (!proxyUrl) throw new Error("Proxy not configured (proxyUrl missing)");
 
-  const res = await fetch(proxyUrl, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ text }),
-  });
+  const res = await fetch(cfg().proxyUrl + "/lead", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ name, phone, email, message })
+});
+
 
   const j = await res.json().catch(() => ({}));
   if (!res.ok || j.ok === false) {
