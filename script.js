@@ -117,13 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
       ok = false;
     }
 
-    // Временно: файлы не отправляем (будет отдельная версия воркера)
-    const files = $("#files").files ? Array.from($("#files").files) : [];
-    if (files.length > 0) {
-      showToast("Attachments are temporarily disabled. Please send photos by text message after we reply.", false);
-      // не блокируем отправку текста — просто предупреждаем
-    }
-
     if (!ok) return;
 
     const c = cfg();
