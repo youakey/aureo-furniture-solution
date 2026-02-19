@@ -151,3 +151,29 @@ input:focus,textarea:focus{border-color:rgba(201,162,74,.55);box-shadow:0 0 0 4p
   .hero h1{font-size:32px}
   .form{grid-template-columns:1fr}
 }
+
+/* === LOGO / BRAND === */
+.brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  text-decoration:none;
+}
+
+.brand img{
+  height:56px;      /* было маленькое — делаем норм */
+  width:auto;
+  display:block;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,.35));
+}
+
+/* если рядом есть текст — пусть будет компактнее */
+.brand .brandText{
+  line-height:1.05;
+}
+
+/* мобилка */
+@media (max-width: 640px){
+  .brand img{ height:44px; }
+  .brand{ gap:10px; }
+}
