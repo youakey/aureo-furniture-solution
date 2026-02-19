@@ -64,23 +64,9 @@ function escapeHtml(s) {
     .replaceAll(">", "&gt;");
 }
 
-async function sendToWorker() {
+async function sendToWorker(payload) {
   const { proxyUrl } = cfg();
   if (!proxyUrl) throw new Error("Proxy not configured (proxyUrl missing)");
-
-  const firstName = $("#firstName").value.trim();
-  const lastName  = $("#lastName").value.trim();
-  const email     = $("#email").value.trim();
-  const message   = $("#message").value.trim();
-
-  // телефон: что реально есть
-  const phoneRaw = phoneInput ? phoneInput.value.trim() : "";
-  const phoneE164 = iti ? iti.getNumber() : ""; // intl-tel-input
-  const phone = (phoneE164 || phoneRaw).trim();
-
-  const name = `${firstName} ${lastName}`.trim();
-
-  const payload = { name, phone, email, message };
 
   const res = await fetch(proxyUrl.replace(/\/$/, "") + "/lead", {
     method: "POST",
@@ -106,31 +92,19 @@ document.addEventListener("DOMContentLoaded", () => {
     ["firstName", "phone", "email", "message"].forEach((id) => setError(id, ""));
 
     const firstName = $("#firstName").value.trim();
-    const lastName = $("#lastName").value.trim();
-    const email = $("#email").value.trim();
-    const message = $("#message").value.trim();
+    const lastName  = $("#lastName").value.trim();
+    const email     = $("#email").value.trim();
+    const message   = $("#message").value.trim();
 
-    const phoneRaw = phoneInput ? phoneInput.value.trim() : "";
-    const phoneE164 = iti ? iti.getNumber() : phoneRaw || "";
+    const phoneRaw  = phoneInput ? phoneInput.value.trim() : "";
+    const phoneE164 = iti ? iti.getNumber() : "";
+    const phone     = (phoneE164 || phoneRaw).trim();
 
     let ok = true;
-    if (!firstName) {
-      setError("firstName", "First name is required.");
-      ok = false;
-    }
-    if (!phoneRaw) {
-      setError("phone", "Phone is required.");
-      ok = false;
-    }
-    if (!email || !validEmail(email)) {
-      setError("email", "Please enter a valid email.");
-      ok = false;
-    }
-    if (!message) {
-      setError("message", "Message is required.");
-      ok = false;
-    }
-
+    if (!firstName) { setError("firstName", "First name is required."); ok = false; }
+    if (!phone)     { setError("phone", "Phone is required."); ok = false; }
+    if (!email || !validEmail(email)) { setError("email", "Please enter a valid email."); ok = false; }
+    if (!message)   { setError("message", "Message is required."); ok = false; }
     if (!ok) return;
 
     const c = cfg();
@@ -141,24 +115,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setLoading(true);
     try {
-      const now = new Date();
-      const text = [
-        "<b>New website request</b>",
-        "",
-        `<b>Name:</b> ${escapeHtml(firstName)}${
-          lastName ? " " + escapeHtml(lastName) : ""
-        }`,
-        `<b>Phone:</b> ${escapeHtml(phoneRaw)}${
-          phoneE164 ? " (" + escapeHtml(phoneE164) + ")" : ""
-        }`,
-        `<b>Email:</b> ${escapeHtml(email)}`,
-        "",
-        `<b>Message:</b> ${escapeHtml(message)}`,
-        "",
-        `<i>${now.toLocaleString()}</i>`,
-      ].join("\n");
-
-      await sendToWorker(text);
+      const name = `${firstName} ${lastName}`.trim();
+      await sendToWorker({ name, phone, email, message });
 
       form.reset();
       if (iti) iti.setNumber("");
