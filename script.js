@@ -39,7 +39,7 @@ if (burger && mobile) {
     mobile.hidden = o;
   });
   mobile.addEventListener("click", (e) => {
-    if (e.target.tagName === "A") {
+    if (e.target.closest("button[data-href]")) {
       burger.setAttribute("aria-expanded", "false");
       mobile.hidden = true;
     }
@@ -82,6 +82,88 @@ async function sendToWorker(payload) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Buttons with data-href (avoid browser status bar URLs on hover)
+  document.querySelectorAll('button[data-href]').forEach((b) => {
+    b.addEventListener('click', (e) => {
+      const href = (b.getAttribute('data-href') || '').trim();
+      if (!href) return;
+      if (href.startsWith('#')) {
+        const el = document.querySelector(href);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        window.location.href = href;
+      }
+      // close mobile menu if open
+      const burger = document.querySelector('#burger');
+      const mobile = document.querySelector('#mobile');
+      if (burger && mobile && burger.getAttribute('aria-expanded') === 'true') {
+        burger.setAttribute('aria-expanded', 'false');
+        mobile.hidden = true;
+      }
+    });
+  });
+
+  // Background motion (scroll-driven CSS vars)
+  const root = document.documentElement;
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const y = window.scrollY || 0;
+      const h = Math.max(1, document.body.scrollHeight - window.innerHeight);
+      const t = Math.min(1, Math.max(0, y / h));
+      root.style.setProperty('--scroll', t.toFixed(4));
+      const mx = Math.sin(t * Math.PI * 2) * 48;
+      const my = (t - 0.5) * 140;
+      root.style.setProperty('--mx', mx.toFixed(1) + 'px');
+      root.style.setProperty('--my', my.toFixed(1) + 'px');
+      ticking = false;
+    });
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  // Portfolio: if data-img is set, use it as a background image.
+  document.querySelectorAll(".ph[data-img]").forEach((el) => {
+    const src = (el.getAttribute("data-img") || "").trim();
+    if (!src) return;
+    // Use CSS var so we can render layered backgrounds (cover + contain).
+    el.style.setProperty("--ph-img", `url('${src.replace(/'/g, "\\'")}')`);
+    el.classList.add("ph--img");
+  });
+
+  // Button ripple
+  document.querySelectorAll('.btn').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      const r = btn.getBoundingClientRect();
+      const x = e.clientX - r.left;
+      const y = e.clientY - r.top;
+      const span = document.createElement('span');
+      span.className = 'ripple';
+      span.style.left = x + 'px';
+      span.style.top = y + 'px';
+      btn.appendChild(span);
+      setTimeout(() => span.remove(), 650);
+    }, { passive: true });
+  });
+
+  // Reveal on scroll
+  const revealEls = Array.from(document.querySelectorAll(
+    '.hero__grid > *, .section, .card, .step, .ph, .tags span'
+  ));
+  revealEls.forEach((el) => el.classList.add('reveal'));
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (en.isIntersecting) {
+        en.target.classList.add('in');
+        io.unobserve(en.target);
+      }
+    });
+  }, { threshold: 0.14, rootMargin: '0px 0px -10% 0px' });
+
+  revealEls.forEach((el) => io.observe(el));
+
   const form = $("#leadForm");
   if (!form) return;
 
