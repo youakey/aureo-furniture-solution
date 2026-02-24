@@ -11,7 +11,46 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,600;0,700;1,500&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.6/build/css/intlTelInput.css" rel="stylesheet"/>
-<link href="styles.css" rel="stylesheet">
+<link href="styles.css?v=hero1" rel="stylesheet">
+
+<style>
+/* === HERO BACKGROUND (sharp + visible) === */
+.hero{
+  position: relative;
+  overflow: hidden;
+  min-height: 92vh;
+  padding-top: 110px;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: url("./assets/hero.png") center/cover no-repeat;
+  transform: translate3d(0, var(--heroY, 0px), 0);
+  will-change: transform;
+  filter: none !important;
+  opacity: 1;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  /* light cinematic overlay, NOT hiding the photo */
+  background:
+    radial-gradient(900px 600px at 60% 30%, rgba(212,175,55,0.22), rgba(0,0,0,0) 60%),
+    linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.55));
+  pointer-events:none;
+}
+.hero > *{ position:relative; z-index:2; }
+
+/* If there is an extra fade layer hiding the image */
+.hero__fade{ display:none !important; }
+.bg-glow{ opacity: .55; } /* keep but not overkill */
+
+/* Parallax helper var (safe even if JS not added) */
+:root{ --heroY: 0px; }
+</style>
+
 </head>
 <body>
 <div class="bg-glow"></div>
@@ -49,12 +88,11 @@
 <main>
 <section class="hero">
 
-<div aria-hidden="true" class="hero__markrow">
-<div aria-hidden="true" class="hero__markfill hero__markfill--left"></div>
-<img alt="Aureo Furniture Solution logo" class="hero__logo" loading="eager" src="assets/logo.png"/>
-<div aria-hidden="true" class="hero__markfill hero__markfill--right"></div>
-</div>
-</div>
+<img alt="Aureo Furniture Solution logo"
+     class="hero__logo"
+     loading="eager"
+     src="assets/logo.png" />
+
 <div class="container hero__grid">
 <div class="hero__copy">
 <div class="pill">Cumming • Alpharetta • North Atlanta</div>
@@ -103,6 +141,29 @@
 </div>
 </div>
 <div class="hero__fade"></div>
+</section>
+
+<section class="section section--soft section--portfolioTop" id="portfolio">
+<div class="container">
+<div class="section__head">
+<h2>Portfolio</h2>
+<p>Selected projects and transformations.</p>
+</div>
+<div class="grid grid--3" id="gallery">
+<!--
+            How to add real photos:
+            1) Put images into: assets/portfolio/
+            2) Set data-img like: data-img="assets/portfolio/p1.jpg"
+          -->
+<div class="ph" data-img="assets/portfolio/p1.png" data-ph="Project 1"></div>
+<div class="ph" data-img="assets/portfolio/p2.jpg" data-ph="Project 2"></div>
+<div class="ph" data-img="assets/portfolio/p3.jpg" data-ph="Project 3"></div>
+<div class="ph" data-img="assets/portfolio/p4.jpg" data-ph="Project 4"></div>
+<div class="ph" data-img="assets/portfolio/p5.jpg" data-ph="Project 5"></div>
+<div class="ph" data-img="assets/portfolio/p6.png" data-ph="Project 6"></div>
+</div>
+<!-- Before/After block removed (per request). -->
+</div>
 </section>
 <section class="section" id="services">
 <div class="container">
@@ -225,28 +286,8 @@
 </div>
 </div>
 </section>
-<section class="section section--soft" id="portfolio">
-<div class="container">
-<div class="section__head">
-<h2>Portfolio</h2>
-<p>Selected projects and transformations.</p>
-</div>
-<div class="grid grid--3" id="gallery">
-<!--
-            How to add real photos:
-            1) Put images into: assets/portfolio/
-            2) Set data-img like: data-img="assets/portfolio/p1.jpg"
-          -->
-<div class="ph" data-img="assets/portfolio/p1.png" data-ph="Project 1"></div>
-<div class="ph" data-img="assets/portfolio/p2.jpg" data-ph="Project 2"></div>
-<div class="ph" data-img="assets/portfolio/p3.jpg" data-ph="Project 3"></div>
-<div class="ph" data-img="assets/portfolio/p4.jpg" data-ph="Project 4"></div>
-<div class="ph" data-img="assets/portfolio/p5.jpg" data-ph="Project 5"></div>
-<div class="ph" data-img="assets/portfolio/p6.png" data-ph="Project 6"></div>
-</div>
-<!-- Before/After block removed (per request). -->
-</div>
-</section>
+
+
 <section class="section" id="areas">
 <div class="container split">
 <div>

@@ -105,6 +105,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Background motion (scroll-driven CSS vars)
   const root = document.documentElement;
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion) {
   let ticking = false;
   const onScroll = () => {
     if (ticking) return;
@@ -114,8 +116,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const h = Math.max(1, document.body.scrollHeight - window.innerHeight);
       const t = Math.min(1, Math.max(0, y / h));
       root.style.setProperty('--scroll', t.toFixed(4));
-      const mx = Math.sin(t * Math.PI * 2) * 48;
-      const my = (t - 0.5) * 140;
+      const mx = Math.sin(t * Math.PI * 2) * 16;
+      const my = (t - 0.5) * 48;
       root.style.setProperty('--mx', mx.toFixed(1) + 'px');
       root.style.setProperty('--my', my.toFixed(1) + 'px');
       ticking = false;
@@ -123,6 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+  }
   // Portfolio: if data-img is set, use it as a background image.
   document.querySelectorAll(".ph[data-img]").forEach((el) => {
     const src = (el.getAttribute("data-img") || "").trim();
@@ -132,24 +135,9 @@ document.addEventListener("DOMContentLoaded", () => {
     el.classList.add("ph--img");
   });
 
-  // Button ripple
-  document.querySelectorAll('.btn').forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      const r = btn.getBoundingClientRect();
-      const x = e.clientX - r.left;
-      const y = e.clientY - r.top;
-      const span = document.createElement('span');
-      span.className = 'ripple';
-      span.style.left = x + 'px';
-      span.style.top = y + 'px';
-      btn.appendChild(span);
-      setTimeout(() => span.remove(), 650);
-    }, { passive: true });
-  });
-
   // Reveal on scroll
   const revealEls = Array.from(document.querySelectorAll(
-    '.hero__grid > *, .section, .card, .step, .ph, .tags span'
+    '.hero__grid > *, .section, .step, .ph'
   ));
   revealEls.forEach((el) => el.classList.add('reveal'));
 
@@ -160,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
         io.unobserve(en.target);
       }
     });
-  }, { threshold: 0.14, rootMargin: '0px 0px -10% 0px' });
+  }, { threshold: 0.20, rootMargin: '0px 0px 0px 0px' });
 
   revealEls.forEach((el) => io.observe(el));
 
