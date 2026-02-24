@@ -409,3 +409,11 @@ body::before{
 
 /* Force hero logo to be truly transparent (no blend trick needed) */
 .hero__logo{mix-blend-mode:normal !important;background:transparent !important;border:0 !important;box-shadow:none !important;}
+
+@media (max-width: 768px){
+  .hero{ min-height: 100svh; }
+
+  .hero::before{
+    background: url("./assets/hero-mobile.png") center/cover no-repeat !important;
+  }
+}
