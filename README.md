@@ -1,4 +1,4 @@
-# Aureo Furniture Solution — Website
+# Aureo Furniture Solutions — Website
 
 Static site for GitHub Pages.
 
