@@ -32,7 +32,7 @@
   content:"";
   position:absolute;
   inset:0;
-  background: url("./assets/hero.png") center/cover no-repeat;
+  background: url("./assets/hero.webp") center/cover no-repeat;
   transform: translate3d(0, var(--heroY, 0px), 0);
   will-change: transform;
   filter: none !important;
@@ -66,7 +66,7 @@
   "url": "https://aureofur.com",
   "telephone": "+19432389384",
   "email": "aureofur@gmail.com",
-  "image": "https://aureofur.com/assets/logo.png",
+  "image": "https://aureofur.com/assets/logo.webp",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Cumming",
@@ -107,7 +107,7 @@
 <header class="header" id="top">
 <div class="container header__inner">
 <button aria-label="Aureo Furniture Solutions" class="brand" data-href="#top" type="button">
-<img alt="Aureo Furniture Solutions logo" class="brand__logo" src="assets/logo.png"/>
+<img alt="Aureo Furniture Solutions logo" class="brand__logo" src="assets/logo.webp" width="72" height="72"/>
 <div class="brand__text">
 <div class="brand__name">Aureo Furniture Solutions</div>
 <div class="brand__tag">Premium Interior Installations</div>
@@ -141,7 +141,8 @@
 <img alt="Aureo Furniture Solutions logo"
      class="hero__logo"
      loading="eager"
-     src="assets/logo.png" />
+     src="assets/logo.webp"
+     width="340" height="340" />
 
 <div class="container hero__grid">
 <div class="hero__copy">
@@ -205,12 +206,48 @@
             1) Put images into: assets/portfolio/
             2) Set data-img like: data-img="assets/portfolio/p1.jpg"
           -->
-<div class="ph" data-img="assets/portfolio/p1.png" data-ph="Custom kitchen cabinets Atlanta" aria-label="Custom kitchen cabinets installed by Aureo Furniture Solutions in Atlanta, GA" role="img"></div>
-<div class="ph" data-img="assets/portfolio/p2.jpg" data-ph="Built-in shelving Atlanta" aria-label="Built-in shelving and storage solutions in Atlanta home" role="img"></div>
-<div class="ph" data-img="assets/portfolio/p3.jpg" data-ph="Custom closet design Atlanta" aria-label="Custom closet design and installation in Atlanta, GA" role="img"></div>
-<div class="ph" data-img="assets/portfolio/p4.jpg" data-ph="TV wall installation Atlanta" aria-label="Premium TV wall and accent feature installation in Atlanta" role="img"></div>
-<div class="ph" data-img="assets/portfolio/p5.jpg" data-ph="Bathroom vanity cabinet Atlanta" aria-label="Bathroom vanity cabinet installation by Aureo Furniture Solutions" role="img"></div>
-<div class="ph" data-img="assets/portfolio/p6.png" data-ph="Office cabinet installation Atlanta" aria-label="Office furniture and commercial cabinet installation in Atlanta, GA" role="img"></div>
+<div class="portfolio-item">
+<div class="ph" data-img="assets/portfolio/p1.webp" data-ph="Kitchen Cabinets · Buckhead" aria-label="Custom kitchen cabinets installed by Aureo Furniture Solutions in Buckhead, Atlanta" role="img"></div>
+<div class="portfolio-desc">
+<span class="portfolio-desc__loc">Buckhead, Atlanta</span>
+<p>Custom shaker-style kitchen cabinets with integrated pantry and island. Soft-close hardware, plywood box construction, installed in a classic Buckhead home.</p>
+</div>
+</div>
+<div class="portfolio-item">
+<div class="ph" data-img="assets/portfolio/p2.webp" data-ph="Built-in Shelving · Midtown" aria-label="Floor-to-ceiling built-in shelving in a modern Midtown Atlanta condo" role="img"></div>
+<div class="portfolio-desc">
+<span class="portfolio-desc__loc">Midtown, Atlanta</span>
+<p>Floor-to-ceiling built-in shelving unit in a modern Midtown condo. Open shelf banks with concealed lower cabinetry — clean lines, painted finish.</p>
+</div>
+</div>
+<div class="portfolio-item">
+<div class="ph" data-img="assets/portfolio/p3.webp" data-ph="Walk-in Closet · Alpharetta" aria-label="Custom walk-in closet design and installation in Alpharetta, GA" role="img"></div>
+<div class="portfolio-desc">
+<span class="portfolio-desc__loc">Alpharetta, GA</span>
+<p>Walk-in closet system with double-hang zones, built-in drawers, and adjustable shelving. Designed and installed for a master suite in a new Alpharetta home.</p>
+</div>
+</div>
+<div class="portfolio-item">
+<div class="ph" data-img="assets/portfolio/p4.webp" data-ph="TV Feature Wall · Marietta" aria-label="Premium TV feature wall with floating shelves installed in Marietta, GA" role="img"></div>
+<div class="portfolio-desc">
+<span class="portfolio-desc__loc">Marietta, GA</span>
+<p>TV feature wall with floating shelves and concealed cable routing. Centered symmetrical layout, matte black hardware — living room transformation in Marietta.</p>
+</div>
+</div>
+<div class="portfolio-item">
+<div class="ph" data-img="assets/portfolio/p5.webp" data-ph="Bathroom Vanity · Roswell" aria-label="Bathroom vanity cabinet installation by Aureo Furniture Solutions in Roswell, GA" role="img"></div>
+<div class="portfolio-desc">
+<span class="portfolio-desc__loc">Roswell, GA</span>
+<p>Double-sink bathroom vanity cabinet with soft-close doors and chrome hardware. Precise leveling on uneven subfloor — residential project in Roswell, GA.</p>
+</div>
+</div>
+<div class="portfolio-item">
+<div class="ph" data-img="assets/portfolio/p6.webp" data-ph="Home Office · Sandy Springs" aria-label="Home office built-in cabinetry installed by Aureo Furniture Solutions in Sandy Springs, GA" role="img"></div>
+<div class="portfolio-desc">
+<span class="portfolio-desc__loc">Sandy Springs, GA</span>
+<p>Full-height home office built-in with upper cabinets, open display shelves, and integrated desktop surface. Custom-fitted to a Sandy Springs study room.</p>
+</div>
+</div>
 </div>
 <!-- Before/After block removed (per request). -->
 </div>
@@ -426,7 +463,7 @@
 <footer class="footer">
 <div class="container footer__inner">
 <div class="footer__brand">
-<img alt="Aureo logo" src="assets/logo.png">
+<img alt="Aureo Furniture Solutions logo" src="assets/logo.webp" width="38" height="38" loading="lazy">
 <div>
 <div class="footer__name">Aureo Furniture Solutions</div>
 <div class="muted small">Cumming • Alpharetta • North Atlanta</div>

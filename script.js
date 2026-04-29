@@ -126,14 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
   }
-  // Portfolio: if data-img is set, use it as a background image.
-  document.querySelectorAll(".ph[data-img]").forEach((el) => {
-    const src = (el.getAttribute("data-img") || "").trim();
-    if (!src) return;
-    // Use CSS var so we can render layered backgrounds (cover + contain).
-    el.style.setProperty("--ph-img", `url('${src.replace(/'/g, "\\'")}')`);
-    el.classList.add("ph--img");
-  });
+  // Portfolio images are lazy-loaded via IntersectionObserver below (not here).
 
   // Reveal on scroll
   const revealEls = Array.from(document.querySelectorAll(
@@ -141,9 +134,26 @@ document.addEventListener("DOMContentLoaded", () => {
   ));
   revealEls.forEach((el) => el.classList.add('reveal'));
 
+  // Sticky header: darken background after 40px scroll
+  const header = document.querySelector('.header');
+  if (header) {
+    const onHeaderScroll = () =>
+      header.classList.toggle('header--scrolled', window.scrollY > 40);
+    window.addEventListener('scroll', onHeaderScroll, { passive: true });
+    onHeaderScroll();
+  }
+
   const io = new IntersectionObserver((entries) => {
     entries.forEach((en) => {
       if (en.isIntersecting) {
+        // Lazy-load portfolio CSS background image on first visibility
+        if (!en.target.classList.contains('ph--img')) {
+          const src = (en.target.getAttribute('data-img') || '').trim();
+          if (src) {
+            en.target.style.setProperty('--ph-img', `url('${src.replace(/'/g, "\\'")}')`);
+            en.target.classList.add('ph--img');
+          }
+        }
         en.target.classList.add('in');
         io.unobserve(en.target);
       }
