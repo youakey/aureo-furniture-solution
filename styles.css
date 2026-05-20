@@ -441,3 +441,34 @@ body::before{
 /* Visual polish: line-height for body copy */
 .tile p{ line-height:1.7; }
 .step__body p{ line-height:1.65; }
+
+/* ===== Part 2: flat text surfaces — kill gradient bleed under text ===== */
+/* Sections get solid dark bases so body/fixed gradients don't show through text */
+.section{ background:#070707; }
+.section--soft{ background:#0a0a0a; }
+/* Raise opacity on semi-transparent containers so fixed glow can't bleed through */
+.tile{ background:rgba(10,10,10,.92); }
+.bullet{ background:rgba(10,10,10,.85); }
+.step{ background:rgba(10,10,10,.85); }
+.card--dark{ background:rgba(10,10,10,.88); }
+.card--glass{ background:rgba(14,14,14,.92); backdrop-filter:blur(10px); }
+.formwrap{ background:rgba(10,10,10,.90); }
+/* Dim fixed ambient glow layers (hero stays unaffected — it has its own ::before photo) */
+body::before{ opacity:.12 !important; }
+.bg-glow{ opacity:.30; }
+
+/* ===== FAQ accordion ===== */
+.faq-list{ display:grid; gap:8px; }
+.faq-item{ border:1px solid rgba(255,255,255,.09); border-radius:16px; background:rgba(10,10,10,.88); overflow:hidden; }
+.faq-item summary{ padding:16px 18px; font-weight:600; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:12px; font-size:15px; }
+.faq-item summary::-webkit-details-marker{ display:none; }
+.faq-item summary::after{ content:"+"; font-size:22px; color:var(--gold); flex-shrink:0; line-height:1; }
+.faq-item[open] summary::after{ content:"−"; }
+.faq-item p{ margin:0; padding:0 18px 16px; color:var(--muted); line-height:1.65; font-size:14.5px; }
+
+/* ===== Review cards ===== */
+.review-card{ border:1px solid rgba(255,255,255,.09); border-radius:var(--radius); background:rgba(10,10,10,.88); padding:22px; display:flex; flex-direction:column; gap:10px; }
+.review-card__stars{ color:var(--gold); letter-spacing:2px; font-size:15px; }
+.review-card__text{ color:var(--muted); font-style:italic; line-height:1.7; margin:0; font-family:'Playfair Display',serif; font-size:14px; }
+.review-card__author{ font-weight:700; font-size:14px; }
+.review-card__meta{ color:var(--muted2); font-size:12px; }
