@@ -106,7 +106,7 @@ a:hover{opacity:.9}
 .check:before{content:"";position:absolute;left:0;top:3px;width:14px;height:14px;border-radius:5px;background:linear-gradient(180deg, var(--gold2), var(--gold));box-shadow:0 10px 26px rgba(201,162,74,.18)}
 .card__actions{display:grid;gap:10px}
 .hero__fade{position:absolute;inset:auto 0 -1px 0;height:70px;background:linear-gradient(180deg, transparent, rgba(0,0,0,.95))}
-.section{padding:58px 0}
+.section{padding:64px 0}
 .section--soft{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05)}
 .section__head{display:flex;justify-content:space-between;gap:24px;align-items:flex-end;margin-bottom:22px}
 .section__head h2{margin:0;font-size:28px;letter-spacing:-.3px}
@@ -122,7 +122,7 @@ a:hover{opacity:.9}
 .split{display:grid;grid-template-columns:1.2fr .8fr;gap:22px;align-items:start}
 .bullets{display:grid;gap:12px;margin-top:18px}
 .bullet{border:1px solid rgba(255,255,255,.09);background:rgba(0,0,0,.22);border-radius:16px;padding:12px 14px}
-.bullet span{font-weight:700}
+.bullet span{font-weight:700;display:block}
 .bullet small{display:block;color:var(--muted);line-height:1.55;margin-top:3px}
 .contactline{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06)}
 .contactline:last-child{border-bottom:0}
@@ -193,7 +193,7 @@ a:hover{opacity:.9}
 .form{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;align-items:start}
 .field{display:flex;flex-direction:column;gap:8px}
 .field--full{grid-column:1 / -1}
-.label-italic{font-family:"Playfair Display",serif;font-style:italic;font-weight:600;letter-spacing:.2px}
+.label-italic{font-family:inherit;font-style:normal;font-weight:600;letter-spacing:.2px}
 label{color:rgba(255,255,255,.86);font-size:14px}
 .req{color:var(--gold2)}
 input,textarea{width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:var(--text);padding:12px 12px;outline:none;font-size:14.5px}
@@ -431,3 +431,13 @@ body::before{
     background: url("./assets/hero-mobile.webp") center/cover no-repeat !important;
   }
 }
+
+/* Bug fix: contain radial glow within the #why section */
+#why{ overflow:hidden; }
+
+/* Bug fix: align tags column and card in #areas to the same vertical center */
+#areas .split{ align-items:center; }
+
+/* Visual polish: line-height for body copy */
+.tile p{ line-height:1.7; }
+.step__body p{ line-height:1.65; }
