@@ -98,6 +98,11 @@ Plain static site, **no build step, no `package.json`**: raw HTML/CSS/JS. Deploy
 
 ### Roadmap checklist
 - [x] Block 1 — this section (project memory)
-- [ ] Block 2 — SEO/technical fixes (geo mismatch, og-image, favicon, JSON-LD review nesting, portfolio `<img>` conversion, `.gitignore`)
-- [ ] Block 3 — Portfolio caption/description fix: p5 "Shaker Kitchen Project · Roswell" → "TV Area" (photo is actually a wood-slat TV/media wall), p6 "Custom Storage Solutions · Sandy Springs" → "Shaker Kitchen Project" (photo is actually a white shaker kitchen with island)
-- [ ] Block 4 — Visual redesign: hero recomposition, varied portfolio grid, typography tuning, systemic brand-motif use, restrained micro-interactions (client explicitly approved touching the hero for this pass)
+- [x] Block 2 — SEO/technical fixes: added `assets/og-image.webp` (1200×630, generated from `hero.webp`), favicon now `logo.webp` (was 2.2MB `logo.png`), LocalBusiness JSON-LD `geo` corrected to Cumming, GA coordinates, reviews nested under LocalBusiness's own `review` property (removed the disconnected separate `ItemList` block), portfolio items converted from `<div data-img>` to real `<img alt loading="lazy">`, added `.gitignore` + untracked stray `.DS_Store` files
+- [x] Block 3 — Portfolio caption/description fix: p5 "Shaker Kitchen Project · Roswell" → **"TV Area"** (photo is a wood-slat TV/media wall), p6 "Custom Storage Solutions · Sandy Springs" → **"Shaker Kitchen Project"** (photo is a white shaker kitchen with island). Descriptions rewritten to match the actual photos.
+- [x] Block 4 — Visual redesign: wired in previously-unused `hero__markrow`/`hero__markfill` CSS to flank the hero logo with gold glass bars, added a gold divider rule under the hero h1, added a recurring pine-cone icon (`assets/pinecone-mark.webp`) before every section heading, switched hero h1 + section h2s to Playfair Display (serif/sans contrast), turned the uniform 3-card portfolio grid into a featured mosaic with staggered reveal-on-scroll. Verified via Playwright screenshots — no console errors, no regressions on `services/*.html`.
+
+**Still open / not done this session:**
+- LocalBusiness JSON-LD still missing `streetAddress`/`postalCode`/`sameAs` — no real data available, left as-is rather than inventing it
+- `README.md` still describes the old client-side `tgToken`/`tgChatId` config model — stale, low-priority cleanup
+- No further hero/typography passes planned — treat the current state as the new baseline; future hero changes need a fresh explicit request per Design Discipline above
