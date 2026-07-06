@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
   }
-  // Portfolio images are lazy-loaded via IntersectionObserver below (not here).
+  // Portfolio images use native <img loading="lazy">; only the reveal fade-in is JS-driven.
 
   // Reveal on scroll
   const revealEls = Array.from(document.querySelectorAll(
@@ -146,14 +146,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const io = new IntersectionObserver((entries) => {
     entries.forEach((en) => {
       if (en.isIntersecting) {
-        // Lazy-load portfolio CSS background image on first visibility
-        if (!en.target.classList.contains('ph--img')) {
-          const src = (en.target.getAttribute('data-img') || '').trim();
-          if (src) {
-            en.target.style.setProperty('--ph-img', `url('${src.replace(/'/g, "\\'")}')`);
-            en.target.classList.add('ph--img');
-          }
-        }
         en.target.classList.add('in');
         io.unobserve(en.target);
       }
