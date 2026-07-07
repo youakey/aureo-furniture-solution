@@ -52,7 +52,7 @@ On the homepage (`index.html`) and in JSON-LD `areaServed`, use only these 6 cit
 ## Design Discipline
 The visual concept of the site is **frozen**: dark palette (`#070707` background, gold `#c9a24a` accent), pine-cone logo, hero composition (logo watermark + hero photo + side card). These elements must not be changed without an explicit client request. All content edits must fit within the existing visual style — no palette changes, no font swaps, no hero restructuring.
 
-> 2026-07-06: client explicitly requested a hero/portfolio/typography redesign pass (see roadmap below) — treat that pass as the standing exception to "no hero restructuring." Any *further* hero changes beyond what's documented here still need a fresh explicit request.
+> 2026-07-06: client requested a hero/portfolio/typography redesign pass; implemented, then **reverted 2026-07-07** at the client's request ("keep the design as it was"). The frozen baseline above is back in effect — any hero/typography/portfolio-grid restructuring needs a fresh explicit request.
 
 ## Site Analysis & Roadmap (2026-07-06)
 
@@ -100,9 +100,9 @@ Plain static site, **no build step, no `package.json`**: raw HTML/CSS/JS. Deploy
 - [x] Block 1 — this section (project memory)
 - [x] Block 2 — SEO/technical fixes: added `assets/og-image.webp` (1200×630, generated from `hero.webp`), favicon now `logo.webp` (was 2.2MB `logo.png`), LocalBusiness JSON-LD `geo` corrected to Cumming, GA coordinates, reviews nested under LocalBusiness's own `review` property (removed the disconnected separate `ItemList` block), portfolio items converted from `<div data-img>` to real `<img alt loading="lazy">`, added `.gitignore` + untracked stray `.DS_Store` files
 - [x] Block 3 — Portfolio caption/description fix: p5 "Shaker Kitchen Project · Roswell" → **"TV Area"** (photo is a wood-slat TV/media wall), p6 "Custom Storage Solutions · Sandy Springs" → **"Shaker Kitchen Project"** (photo is a white shaker kitchen with island). Descriptions rewritten to match the actual photos.
-- [x] Block 4 — Visual redesign: wired in previously-unused `hero__markrow`/`hero__markfill` CSS to flank the hero logo with gold glass bars, added a gold divider rule under the hero h1, added a recurring pine-cone icon (`assets/pinecone-mark.webp`) before every section heading, switched hero h1 + section h2s to Playfair Display (serif/sans contrast), turned the uniform 3-card portfolio grid into a featured mosaic with staggered reveal-on-scroll. Verified via Playwright screenshots — no console errors, no regressions on `services/*.html`.
+- [reverted] Block 4 — Visual redesign was implemented (hero flanking gold bars, gold divider under h1, pine-cone icon before section headings, Playfair Display h1/h2s, featured portfolio mosaic with staggered reveal) then **explicitly reverted by the client on 2026-07-07** ("по дизайну верни как было, остальное норм" — keep Blocks 2/3, undo Block 4 only). Reverted via `git revert` of the redesign commit. Design gaps listed above are therefore still open/unaddressed — do not redo this pass without a fresh explicit request.
 
-**Still open / not done this session:**
+**Still open / not done:**
 - LocalBusiness JSON-LD still missing `streetAddress`/`postalCode`/`sameAs` — no real data available, left as-is rather than inventing it
 - `README.md` still describes the old client-side `tgToken`/`tgChatId` config model — stale, low-priority cleanup
-- No further hero/typography passes planned — treat the current state as the new baseline; future hero changes need a fresh explicit request per Design Discipline above
+- Visual redesign (Block 4) — reverted, see above. Design gaps remain unaddressed; needs a fresh explicit client request before attempting again
