@@ -4,6 +4,11 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
+<!-- Content Security Policy. GitHub Pages cannot set response headers, so this is
+     the meta-tag form. It cannot express frame-ancestors / X-Frame-Options /
+     HSTS — see SECURITY-HEADERS.md for the Cloudflare rules that add those. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; frame-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.jsdelivr.net; connect-src 'self' https://aureo-leads.zerocppscript.workers.dev https://cdn.jsdelivr.net; form-action 'self'; upgrade-insecure-requests"/>
+<meta name="referrer" content="strict-origin-when-cross-origin"/>
 <title>Custom Kitchen Cabinets &amp; Closet Systems in Atlanta | Aureo Furniture Solution</title>
 <meta content="Professional kitchen cabinet installation, custom closets, and premium interior cabinetry in Atlanta and surrounding Georgia areas. Modern and timeless designs crafted with precision." name="description"/>
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1"/>
@@ -11,9 +16,9 @@
 <meta name="author" content="Aureo Furniture Solution"/>
 <meta name="theme-color" content="#0A0A0A"/>
 <meta name="geo.region" content="US-GA"/>
-<meta name="geo.placename" content="Atlanta"/>
-<meta name="geo.position" content="33.7490;-84.3880"/>
-<meta name="ICBM" content="33.7490, -84.3880"/>
+<meta name="geo.placename" content="Cumming, GA"/>
+<meta name="geo.position" content="34.2073;-84.1402"/>
+<meta name="ICBM" content="34.2073, -84.1402"/>
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="https://aureofur.com/"/>
 <meta property="og:title" content="Custom Kitchen Cabinets &amp; Closet Systems in Atlanta | Aureo Furniture Solution"/>
@@ -25,50 +30,17 @@
 <meta name="twitter:title" content="Custom Kitchen Cabinets &amp; Closet Systems in Atlanta | Aureo Furniture Solution"/>
 <meta name="twitter:description" content="Professional kitchen cabinet installation, custom closets, and premium interior cabinetry in Atlanta and surrounding Georgia areas."/>
 <meta name="twitter:image" content="https://aureofur.com/assets/og-image.webp"/>
-<link href="assets/logo.webp" rel="icon"/>
+<link rel="icon" type="image/webp" sizes="32x32" href="assets/favicon-32.webp"/>
+<link rel="apple-touch-icon" href="assets/logo.webp"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.6/build/js/intlTelInput.min.js" rel="preload" as="script" crossorigin=""/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,600;0,700;1,500&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.6/build/css/intlTelInput.css" rel="stylesheet"/>
-<link href="styles.css?v=hero1" rel="stylesheet">
-
-<style>
-/* === HERO BACKGROUND (sharp + visible) === */
-.hero{
-  position: relative;
-  overflow: hidden;
-  min-height: 92vh;
-  padding-top: 110px;
-}
-.hero::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background: url("./assets/hero.webp") center/cover no-repeat;
-  transform: translate3d(0, var(--heroY, 0px), 0);
-  will-change: transform;
-  filter: none !important;
-  opacity: 1;
-}
-.hero::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  /* light cinematic overlay, NOT hiding the photo */
-  background:
-    radial-gradient(900px 600px at 60% 30%, rgba(212,175,55,0.22), rgba(0,0,0,0) 60%),
-    linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.55));
-  pointer-events:none;
-}
-.hero > *{ position:relative; z-index:2; }
-
-/* If there is an extra fade layer hiding the image */
-.hero__fade{ display:none !important; }
-.bg-glow{ opacity: .55; } /* keep but not overkill */
-
-/* Parallax helper var (safe even if JS not added) */
-:root{ --heroY: 0px; }
-</style>
+<link href="styles.css?v=20260806" rel="stylesheet"/>
+<!-- LCP: the hero photo is a CSS background, so the browser only discovers it after
+     styles.css parses. Preload it up front, matching the CSS breakpoint at 768px. -->
+<link rel="preload" as="image" href="assets/hero.webp" media="(min-width:769px)" fetchpriority="high"/>
+<link rel="preload" as="image" href="assets/hero-mobile.webp" media="(max-width:768px)" fetchpriority="high"/>
 
 <script type="application/ld+json">
 {
@@ -206,10 +178,10 @@
 <div class="container header__inner">
 <button aria-label="Aureo Furniture Solution" class="brand" data-href="#top" type="button">
 <img alt="Aureo Furniture Solution logo" class="brand__logo" src="assets/logo.webp" width="72" height="72"/>
-<div class="brand__text">
-<div class="brand__name">Aureo Furniture Solution</div>
-<div class="brand__tag">Premium Interior Installations</div>
-</div>
+<span class="brand__text">
+<span class="brand__name">Aureo Furniture Solution</span>
+<span class="brand__tag">Premium Interior Installations</span>
+</span>
 </button>
 <nav aria-label="Primary" class="nav">
 <button data-href="#services" type="button">Services</button>
@@ -239,8 +211,10 @@
 <img alt="Aureo Furniture Solution logo"
      class="hero__logo"
      loading="eager"
+     fetchpriority="high"
+     decoding="async"
      src="assets/logo.webp"
-     width="340" height="340" />
+     width="340" height="510" />
 
 <div class="container hero__grid">
 <div class="hero__copy">
@@ -285,7 +259,6 @@
 </div>
 </div>
 </div>
-<div class="hero__fade"></div>
 </section>
 
 <section class="section section--soft section--portfolioTop" id="portfolio">
@@ -293,13 +266,9 @@
 <div class="section__head">
 <h2>Recent Projects</h2>
 <p>Selected installations and transformations across Atlanta and surrounding areas.</p>
+<p class="portfolio-hint">Swipe to browse projects →</p>
 </div>
 <div class="grid grid--3" id="gallery">
-<!--
-            How to add real photos:
-            1) Put images into: assets/portfolio/
-            2) Set data-img like: data-img="assets/portfolio/p1.jpg"
-          -->
 <div class="portfolio-item">
 <div class="ph" data-ph="Modern Kitchen Installation · Buckhead">
 <img src="assets/portfolio/p1.webp" alt="Modern kitchen cabinet installation by Aureo Furniture Solution in Buckhead, Atlanta" width="900" height="600" loading="lazy"/>
@@ -622,30 +591,37 @@
 <p>Fill out the form — we’ll respond as soon as possible.</p>
 </div>
 <div class="formwrap">
-<form class="form" id="leadForm" novalidate="">
+<form class="form" id="leadForm">
 <div class="field">
 <label for="firstName"><span class="label-italic">First name</span> <span class="req">*</span></label>
-<input autocomplete="given-name" id="firstName" name="first_name" required="" type="text"/>
+<input autocomplete="given-name" id="firstName" name="first_name" required="" type="text" minlength="2" maxlength="60" pattern="[^&lt;&gt;]{2,60}" title="Please enter your first name."/>
 <div class="error" data-err-for="firstName"></div>
 </div>
 <div class="field">
 <label for="lastName"><span class="label-italic">Last name</span></label>
-<input autocomplete="family-name" id="lastName" name="last_name" type="text"/>
+<input autocomplete="family-name" id="lastName" name="last_name" type="text" maxlength="60"/>
 </div>
 <div class="field">
 <label for="phone"><span class="label-italic">Phone</span> <span class="req">*</span></label>
-<input autocomplete="tel" id="phone" name="phone" required="" type="tel"/>
+<input autocomplete="tel" id="phone" name="phone" required="" type="tel" inputmode="tel" maxlength="24" pattern="[0-9 ()+\-.]{7,24}" title="Enter a phone number, digits only (spaces, +, -, () are allowed)."/>
 <div class="error" data-err-for="phone"></div>
 </div>
 <div class="field">
 <label for="email"><span class="label-italic">Email</span> <span class="req">*</span></label>
-<input autocomplete="email" id="email" name="email" required="" type="email"/>
+<input autocomplete="email" id="email" name="email" required="" type="email" maxlength="120" pattern="[^@\s]+@[^@\s]+\.[^@\s]{2,}" title="Enter a valid email address, e.g. name@example.com."/>
 <div class="error" data-err-for="email"></div>
 </div>
 <div class="field field--full">
 <label for="message"><span class="label-italic">Type your message / request here…</span> <span class="req">*</span></label>
-<textarea id="message" name="message" required="" rows="6"></textarea>
+<textarea id="message" name="message" required="" rows="6" minlength="10" maxlength="2000" title="Please describe your project — at least 10 characters."></textarea>
 <div class="error" data-err-for="message"></div>
+</div>
+<!-- Honeypot: invisible to humans, irresistible to bots.
+     Checked in script.js only — it is never added to the request payload,
+     so the Cloudflare Worker contract is unchanged. -->
+<div class="hp-field" aria-hidden="true">
+<label for="company">Company (leave this field empty)</label>
+<input autocomplete="off" id="company" name="company" tabindex="-1" type="text"/>
 </div>
 <div class="actions">
 <button class="btn btn--gold" id="submitBtn" type="submit">
@@ -663,12 +639,12 @@
 <footer class="footer">
 <div class="container footer__inner">
 <div class="footer__brand">
-<img alt="Aureo Furniture Solution logo" src="assets/logo.webp" width="38" height="38" loading="lazy">
+<img alt="Aureo Furniture Solution logo" src="assets/logo.webp" width="38" height="38" loading="lazy"/>
 <div>
 <div class="footer__name">Aureo Furniture Solution</div>
 <div class="muted small">Atlanta • Cumming • Alpharetta</div>
 </div>
-</img></div>
+</div>
 <div class="footer__links">
 <button data-href="#services" type="button">Services</button>
 <button data-href="#portfolio" type="button">Portfolio</button>
@@ -686,8 +662,12 @@
 </div>
 </div>
 </footer>
-<script src="config.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.6/build/js/intlTelInput.min.js"></script>
-<script src="script.js"></script>
+<!-- Sticky mobile call CTA (shown by script.js after the hero) -->
+<button class="callbar" id="callbar" type="button" data-href="tel:+19432389384" aria-label="Call Aureo Furniture Solution at +1 (943) 238-9384">
+<span aria-hidden="true">&#9742;</span><span>Call Now &middot; (943) 238-9384</span>
+</button>
+<script src="config.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.6/build/js/intlTelInput.min.js" defer></script>
+<script src="script.js" defer></script>
 </body>
 </html>

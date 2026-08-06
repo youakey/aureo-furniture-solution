@@ -43,8 +43,10 @@ a:hover{opacity:.9}
   border:1px solid rgba(255,255,255,.08);
   filter:drop-shadow(0 10px 26px rgba(0,0,0,.45));
 }
-.brand__name{font-weight:800;font-size:16px;line-height:1.1}
-.brand__tag{font-size:12px;color:var(--muted2);margin-top:2px}
+/* spans, not divs: <button> only accepts phrasing content (HTML spec) */
+.brand__text{display:block;text-align:left}
+.brand__name{display:block;font-weight:800;font-size:16px;line-height:1.1}
+.brand__tag{display:block;font-size:12px;color:var(--muted2);margin-top:2px}
 .nav{display:flex;align-items:center;gap:18px}
 .nav a{font-size:13.5px;color:var(--muted)}
 .nav a:hover{color:var(--text)}
@@ -52,8 +54,6 @@ a:hover{opacity:.9}
 .btn{position:relative;overflow:hidden;will-change:transform}
 .btn:hover{transform:translateY(-1px)}
 .btn:active{transform:translateY(1px)}
-.btn .ripple{position:absolute;border-radius:999px;transform:translate(-50%,-50%);pointer-events:none;opacity:.35;filter:blur(.2px);animation:ripple .55s ease-out forwards;background:rgba(255,255,255,.65)}
-@keyframes ripple{from{width:0;height:0;opacity:.35}to{width:520px;height:520px;opacity:0}}
 .btn--gold{background:linear-gradient(180deg, var(--gold2), var(--gold));color:#101010;box-shadow:0 18px 50px rgba(201,162,74,.20)}
 .btn--gold:hover{filter:brightness(1.05)}
 .btn--ghost{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.10);color:var(--text)}
@@ -66,17 +66,33 @@ a:hover{opacity:.9}
 .mobile a{color:var(--muted)}
 .mobile a:hover{color:var(--text)}
 .hero{position:relative;padding:72px 0 34px;overflow:hidden}
+
+/* ── Hero logo — single source of truth (was 5 conflicting blocks) ──
+   Rendering is byte-for-byte identical to the previous cascade result:
+   >920px  width min(360px,46vw), margin-bottom 26px
+   <=920px width min(320px,70vw), margin-bottom 0
+   Logo artwork, proportions and on-screen size are unchanged. */
 .hero__logo{
   display:block;
-  margin: 0 auto 26px;
-  width: min(340px, 72vw);
-  height: auto;
-  filter: drop-shadow(0 26px 80px rgba(0,0,0,.65));
-  opacity: 1;
+  margin:0 auto 26px;
+  width:min(360px, 46vw);
+  height:auto;
+  opacity:.92;
+  background:transparent;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  mix-blend-mode:normal;
+  filter:drop-shadow(0 18px 55px rgba(0,0,0,.55)) saturate(1.05) contrast(1.05);
+  animation:heroLogoIn 900ms cubic-bezier(.2,.9,.2,1) both;
   pointer-events:none;
 }
-@media (max-width: 720px){
-  .hero__logo{ margin: 0 auto 18px; width: min(260px, 74vw); }
+@media (max-width:920px){
+  .hero__logo{ margin:0 auto; width:min(320px, 70vw); }
+}
+@keyframes heroLogoIn{
+  from{opacity:0; transform:translateY(10px) scale(.985)}
+  to{opacity:.92; transform:none}
 }
 
 .hero__grid{display:grid;grid-template-columns:1.2fr .9fr;gap:34px;align-items:start}
@@ -87,8 +103,6 @@ a:hover{opacity:.9}
 .hero__cta{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap}
 .trust{display:flex;gap:18px;margin-top:22px;flex-wrap:wrap}
 .trust__item{padding:12px 14px;border-radius:16px;border:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.24)}
-.trust__num{font-weight:800;font-size:14px}
-.trust__label{color:var(--muted2);font-size:12px;margin-top:2px}
 /* scroll-margin-top: desktop 82px (72px logo + 14px×2 pad), mobile 64px (46px logo + 9px×2 pad) */
 .section,#portfolio,#services,#why,#process,#areas,#contact{scroll-margin-top:82px}
 @media(max-width:640px){
@@ -105,23 +119,24 @@ a:hover{opacity:.9}
 .check{position:relative;padding-left:24px;color:var(--muted);font-size:13.5px}
 .check:before{content:"";position:absolute;left:0;top:3px;width:14px;height:14px;border-radius:5px;background:linear-gradient(180deg, var(--gold2), var(--gold));box-shadow:0 10px 26px rgba(201,162,74,.18)}
 .card__actions{display:grid;gap:10px}
-.hero__fade{position:absolute;inset:auto 0 -1px 0;height:70px;background:linear-gradient(180deg, transparent, rgba(0,0,0,.95))}
-.section{padding:64px 0}
+.section{padding:88px 0}
 .section--soft{background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));border-top:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05)}
-.section__head{display:flex;justify-content:space-between;gap:24px;align-items:flex-end;margin-bottom:22px}
-.section__head h2{margin:0;font-size:28px;letter-spacing:-.3px}
-.section__head p{margin:0;color:var(--muted);max-width:60ch;line-height:1.65}
-.grid{display:grid;gap:16px}
+.section__head{display:flex;justify-content:space-between;gap:28px;align-items:flex-end;margin-bottom:34px}
+.section__head h2{margin:0;font-size:34px;line-height:1.15;letter-spacing:-.6px}
+.section__head p{margin:0;color:var(--muted);max-width:60ch;line-height:1.7}
+.grid{display:grid;gap:22px}
 .grid--3{grid-template-columns:repeat(3,1fr)}
 .grid--2{grid-template-columns:repeat(2,1fr)}
-.tile{border-radius:var(--radius);border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.28);padding:18px;box-shadow:0 12px 50px rgba(0,0,0,.35)}
-.tile h3{margin:0 0 8px;font-size:16px}
+.tile{border-radius:var(--radius);border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.28);padding:24px;box-shadow:0 12px 50px rgba(0,0,0,.35)}
+.tile h3{margin:0 0 10px;font-size:18px;letter-spacing:-.2px}
 .tile p{margin:0 0 10px;color:var(--muted);line-height:1.6}
 .tile ul{margin:0;padding-left:18px;color:var(--muted2);line-height:1.7}
 .tile li{margin:4px 0}
-.split{display:grid;grid-template-columns:1.2fr .8fr;gap:22px;align-items:start}
-.bullets{display:grid;gap:12px;margin-top:18px}
-.bullet{border:1px solid rgba(255,255,255,.09);background:rgba(0,0,0,.22);border-radius:16px;padding:12px 14px}
+.split{display:grid;grid-template-columns:1.2fr .8fr;gap:34px;align-items:start}
+/* h2 outside .section__head (#why, #areas) — keep one typographic scale sitewide */
+.split h2{margin:0 0 14px;font-size:34px;line-height:1.15;letter-spacing:-.6px}
+.bullets{display:grid;gap:12px;margin-top:24px}
+.bullet{border:1px solid rgba(255,255,255,.09);background:rgba(0,0,0,.22);border-radius:16px;padding:14px 16px}
 .bullet span{font-weight:700;display:block}
 .bullet small{display:block;color:var(--muted);line-height:1.55;margin-top:3px}
 .contactline{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06)}
@@ -129,10 +144,10 @@ a:hover{opacity:.9}
 .contactline span{color:var(--muted2);font-size:12.5px}
 .contactline a{color:var(--text);font-weight:700}
 .divider{height:1px;background:rgba(255,255,255,.08);margin:14px 0}
-.steps{display:grid;gap:12px}
-.step{display:flex;gap:14px;border:1px solid rgba(255,255,255,.09);background:rgba(0,0,0,.22);border-radius:18px;padding:14px 16px}
-.step__num{width:34px;height:34px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, var(--gold2), var(--gold));color:#101010;font-weight:900}
-.step__body h3{margin:0 0 4px;font-size:15px}
+.steps{display:grid;gap:14px}
+.step{display:flex;gap:16px;border:1px solid rgba(255,255,255,.09);background:rgba(0,0,0,.22);border-radius:18px;padding:18px 20px}
+.step__num{width:34px;height:34px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, var(--gold2), var(--gold));color:#101010;font-weight:900}
+.step__body h3{margin:0 0 5px;font-size:16px}
 .step__body p{margin:0;color:var(--muted);line-height:1.6}
 .ph{
   border-radius:18px;
@@ -186,7 +201,6 @@ a:hover{opacity:.9}
 /* Reveal-on-scroll */
 .reveal{opacity:0;transform:translate3d(0,6px,0) scale(.998);transition:opacity .55s ease, transform .65s cubic-bezier(.2,.85,.2,1)}
 .reveal.in{opacity:1;transform:translate3d(0,0,0) scale(1)}
-.ph--wide{aspect-ratio: 21 / 9; min-height: 210px}
 
 .tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
 .tags span{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.05);color:var(--muted);font-size:12.5px}
@@ -222,8 +236,10 @@ input:focus,textarea:focus{border-color:rgba(201,162,74,.55);box-shadow:0 0 0 4p
   .hero h1{font-size:38px}
   .hero__card .card{position:relative;top:auto}
   .grid--3{grid-template-columns:1fr 1fr}
-  .split{grid-template-columns:1fr}
-  .section__head{flex-direction:column;align-items:flex-start}
+  .split{grid-template-columns:1fr;gap:26px}
+  .section{padding:72px 0}
+  .section__head{flex-direction:column;align-items:flex-start;gap:12px}
+  .section__head h2,.split h2{font-size:30px}
 }
 @media (max-width:640px){
   /* nicer mobile rhythm */
@@ -247,20 +263,7 @@ input:focus,textarea:focus{border-color:rgba(201,162,74,.55);box-shadow:0 0 0 4p
   /* mobile menu CTA — full-width, minimum 48px touch target */
   .mobile .btn{display:block;width:100%;text-align:center;min-height:48px;padding:13px 16px}
 
-  /* hero on mobile */
-  .hero__logo{
-  display:block;
-  margin: 0 auto 26px;
-  width: min(340px, 72vw);
-  height: auto;
-  filter: drop-shadow(0 26px 80px rgba(0,0,0,.65));
-  opacity: 1;
-  pointer-events:none;
-}
-@media (max-width: 720px){
-  .hero__logo{ margin: 0 auto 18px; width: min(260px, 74vw); }
-}
-
+  /* hero on mobile — .hero__logo handled by the single block above */
   .pill{font-size:12px;padding:7px 10px}
   .lead{font-size:15px}
   .hero__cta{gap:10px}
@@ -269,9 +272,11 @@ input:focus,textarea:focus{border-color:rgba(201,162,74,.55);box-shadow:0 0 0 4p
   .trust__item{width:100%}
 
   /* cards / sections */
-  .section{padding:46px 0}
-  .card{padding:16px}
-  .tile{padding:16px}
+  .section{padding:56px 0}
+  .section__head{margin-bottom:26px}
+  .section__head h2,.split h2{font-size:26px;letter-spacing:-.4px}
+  .card{padding:18px}
+  .tile{padding:20px}
 }
 
 
@@ -289,69 +294,6 @@ button:focus-visible{outline:2px solid rgba(201,162,74,.55);outline-offset:3px;b
 .mobile a:hover,.mobile button:hover{background:rgba(255,255,255,.06)}
 .brand{cursor:pointer}
 .brand:active{transform:translateY(1px)}
-
-/* --- Hero: centered logo with side info --- */
-.hero__markrow{
-  width:min(var(--container), calc(100% - 40px));
-  margin:0 auto 8px;
-  display:grid;
-  grid-template-columns:1fr auto 1fr;
-  gap:18px;
-  align-items:center;
-}
-.hero__logo{
-  width:min(360px, 46vw);
-  height:auto;
-  display:block;
-  filter:drop-shadow(0 22px 60px rgba(0,0,0,.55));
-  animation:floaty 5.2s ease-in-out infinite;
-}
-@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-
-.hero__markfill{
-  height:86px;
-  border-radius:22px;
-  position:relative;
-  opacity:.95;
-  filter:drop-shadow(0 18px 60px rgba(0,0,0,.45));
-}
-.hero__markfill::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:22px;
-  background:
-    linear-gradient(90deg,
-      rgba(0,0,0,0) 0%,
-      rgba(212,175,55,.16) 22%,
-      rgba(255,255,255,.08) 50%,
-      rgba(212,175,55,.16) 78%,
-      rgba(0,0,0,0) 100%);
-  border:1px solid rgba(255,255,255,.08);
-  backdrop-filter:blur(10px);
-}
-.hero__markfill::after{
-  content:"";
-  position:absolute;
-  inset:-10px -12px;
-  border-radius:26px;
-  background:
-    radial-gradient(40px 40px at 18% 48%, rgba(212,175,55,.22), rgba(0,0,0,0) 70%),
-    radial-gradient(54px 54px at 72% 52%, rgba(255,255,255,.10), rgba(0,0,0,0) 72%),
-    radial-gradient(28px 28px at 52% 28%, rgba(212,175,55,.14), rgba(0,0,0,0) 70%);
-  opacity:.9;
-  pointer-events:none;
-}
-.hero__markfill--left{justify-self:end; width:min(320px, 28vw);}
-.hero__markfill--right{justify-self:start; width:min(320px, 28vw);}
-
-
-@media (max-width: 920px){
-  .hero__markrow{grid-template-columns:1fr;gap:10px;margin-bottom:12px}
-  .hero__markfill--left,.hero__markfill--right{width:min(520px, 92vw);justify-self:center}
-  .hero__markfill{height:72px}
-  .hero__logo{margin:0 auto;width:min(320px, 70vw)}
-}
 
 /* --- Background motion (driven by scroll vars) --- */
 :root{ --scroll:0; --mx:0px; --my:0px; }
@@ -381,25 +323,8 @@ body::before{
 .card,.step{transition:transform .22s ease, box-shadow .22s ease}
 .card:hover,.step:hover{transform:translateY(-4px)}
 
-/* ===== Patch: dissolve logo into hero photo + subtle motion (vSubtle) ===== */
+/* ===== Patch: subtle motion (vSubtle) ===== */
 .hero{isolation:isolate;}
-
-/* Make the big hero logo blend with the background photo (black becomes transparent) */
-.hero__logo{
-  background: transparent !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  mix-blend-mode: screen;
-  opacity: .92;
-  filter: drop-shadow(0 18px 55px rgba(0,0,0,.55)) saturate(1.05) contrast(1.05);
-  animation: heroLogoIn 900ms cubic-bezier(.2,.9,.2,1) both !important;
-  pointer-events: none;
-}
-@keyframes heroLogoIn{
-  from{opacity:0; transform: translateY(10px) scale(.985);} 
-  to{opacity:.92; transform: translateY(0) scale(1);} 
-}
 
 /* Softer reveal (less "in your face") */
 .reveal{opacity:0; transform: translateY(8px); transition: opacity .75s ease, transform .75s cubic-bezier(.2,.85,.2,1);} 
@@ -419,18 +344,6 @@ body::before{
   .hero__logo{animation:none !important;}
   .reveal{transition:none !important;}
   .ph,.card,.step{transition:none !important;}
-}
-
-
-/* Force hero logo to be truly transparent (no blend trick needed) */
-.hero__logo{mix-blend-mode:normal !important;background:transparent !important;border:0 !important;box-shadow:none !important;}
-
-@media (max-width: 768px){
-  .hero{ min-height: 100svh; }
-
-  .hero::before{
-    background: url("./assets/hero-mobile.webp") center/cover no-repeat !important;
-  }
 }
 
 /* Bug fix: contain radial glow within the #why section */
@@ -473,3 +386,159 @@ body::before{ opacity:.12 !important; }
 .review-card__text{ color:var(--muted); font-style:italic; line-height:1.7; margin:0; font-family:'Playfair Display',serif; font-size:14px; }
 .review-card__author{ font-weight:700; font-size:14px; }
 .review-card__meta{ color:var(--muted2); font-size:12px; }
+/* ===== Block 5 (2026-08-06): spacing / hover / mobile portfolio / sticky call ===== */
+
+/* --- Portfolio card hover: zoom the photo, keep the card still --- */
+.ph img{
+  transition:transform .5s cubic-bezier(.22,.85,.25,1);
+  transform-origin:center;
+}
+.portfolio-item:hover .ph img,
+.portfolio-item:focus-within .ph img{ transform:scale(1.06); }
+
+/* Caption chip picks up the gold accent on hover */
+.ph:after{ transition:background .25s ease, border-color .25s ease, color .25s ease; }
+.portfolio-item:hover .ph:after,
+.portfolio-item:focus-within .ph:after{
+  background:rgba(201,162,74,.92);
+  border-color:rgba(201,162,74,.92);
+  color:#101010;
+}
+
+/* Replace the whole-card lift with a calmer border + shadow accent */
+.ph:hover{ transform:none !important; }
+.portfolio-item:hover .ph,
+.portfolio-item:focus-within .ph{
+  border-color:rgba(201,162,74,.34);
+  box-shadow:0 22px 60px rgba(0,0,0,.55);
+}
+.portfolio-desc__loc{ transition:color .25s ease; }
+.portfolio-item:hover .portfolio-desc__loc{ color:var(--gold2); }
+
+@media (prefers-reduced-motion: reduce){
+  .ph img{transition:none}
+  .portfolio-item:hover .ph img{transform:none}
+}
+
+/* --- Mobile portfolio: snap slider instead of a 6-item vertical stack --- */
+@media (max-width:640px){
+  #gallery{
+    display:flex;
+    gap:14px;
+    overflow-x:auto;
+    overscroll-behavior-x:contain;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    margin-inline:-12px;
+    padding:0 12px 16px;
+  }
+  #gallery::-webkit-scrollbar{ display:none; }
+  #gallery .portfolio-item{
+    flex:0 0 84%;
+    scroll-snap-align:center;
+    scroll-snap-stop:always;
+  }
+  /* off-screen cards must not stay stuck at opacity 0 in a horizontal scroller */
+  #gallery .ph.reveal{ opacity:1; transform:none; }
+  .portfolio-hint{
+    display:block;
+    margin:-4px 0 0;
+    font-size:12px;
+    color:var(--muted2);
+    letter-spacing:.4px;
+  }
+}
+.portfolio-hint{ display:none; }
+
+/* --- Sticky "Call Now" bar on mobile --- */
+.callbar{ display:none; }
+@media (max-width:640px){
+  .callbar{
+    display:flex;
+    position:fixed;
+    left:12px; right:12px;
+    bottom:calc(12px + env(safe-area-inset-bottom, 0px));
+    z-index:1200;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    width:auto;
+    min-height:54px;
+    padding:14px 18px;
+    border-radius:999px;
+    background:linear-gradient(180deg, var(--gold2), var(--gold));
+    color:#101010;
+    font-weight:700;
+    font-size:15px;
+    letter-spacing:.2px;
+    box-shadow:0 16px 44px rgba(0,0,0,.6), 0 0 0 1px rgba(0,0,0,.28);
+    opacity:0;
+    transform:translateY(150%);
+    transition:transform .32s cubic-bezier(.2,.85,.2,1), opacity .32s ease;
+    pointer-events:none;
+  }
+  .callbar.is-visible{ opacity:1; transform:none; pointer-events:auto; }
+  .callbar:active{ filter:brightness(.96); }
+  /* keep the last footer line clear of the bar */
+  .footer{ padding-bottom:96px; }
+}
+@media (max-width:640px) and (prefers-reduced-motion: reduce){
+  .callbar{ transition:none; }
+}
+
+/* ===== Hero background (moved out of the inline <style> in index.html) =====
+   Rendering is unchanged: this block sits last in the cascade exactly like the
+   inline block did, so the same declarations win. Keeping it here removes one
+   inline <style> element, which lets the CSP drop style-src 'unsafe-inline'
+   for everything except the small set of legacy inline style="" attributes. */
+:root{ --heroY:0px; }
+.hero{
+  position:relative;
+  overflow:hidden;
+  min-height:92vh;
+  padding-top:110px;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url("assets/hero.webp") center/cover no-repeat;
+  transform:translate3d(0, var(--heroY, 0px), 0);
+  will-change:transform;
+  opacity:1;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  /* light cinematic overlay, NOT hiding the photo */
+  background:
+    radial-gradient(900px 600px at 60% 30%, rgba(212,175,55,0.22), rgba(0,0,0,0) 60%),
+    linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.55));
+  pointer-events:none;
+}
+.hero > *{ position:relative; z-index:2; }
+.bg-glow{ opacity:.55; }
+
+@media (max-width:768px){
+  /* NOTE: an older patch tried `min-height:100svh` here, but the inline <style>
+     block in index.html sat later in the cascade and always overrode it back to
+     92vh — so 100svh never actually rendered. Keeping 92vh preserves the live
+     appearance exactly. Switch to 100svh only as a deliberate decision. */
+  .hero::before{ background-image:url("assets/hero-mobile.webp"); }
+}
+
+/* ===== Honeypot field =====
+   Deliberately NOT display:none — many bots skip hidden inputs but happily fill
+   an off-screen one. Kept out of the tab order and out of the a11y tree. */
+.hp-field{
+  position:absolute !important;
+  left:-9999px !important;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+  opacity:0;
+  pointer-events:none;
+}

@@ -46,6 +46,17 @@ if (burger && mobile) {
   });
 }
 
+// intl-tel-input's stylesheet is only needed for the phone field, which sits far
+// below the fold. Injecting it here keeps it off the critical rendering path and
+// avoids an inline onload handler (which the CSP would otherwise have to allow).
+if (phoneInput) {
+  const itiCss = document.createElement("link");
+  itiCss.rel = "stylesheet";
+  itiCss.href =
+    "https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.6/build/css/intlTelInput.css";
+  document.head.appendChild(itiCss);
+}
+
 let iti = null;
 if (phoneInput && window.intlTelInput) {
   iti = window.intlTelInput(phoneInput, {
@@ -143,6 +154,45 @@ document.addEventListener("DOMContentLoaded", () => {
     onHeaderScroll();
   }
 
+  // Sticky mobile "Call Now" bar:
+  // appears once the visitor scrolls past the first screen, hides again while the
+  // contact form is on screen so it never covers the fields.
+  const callbar = document.querySelector('#callbar');
+  if (callbar) {
+    const contact = document.querySelector('#contact');
+    let contactVisible = false;
+
+    if (contact && 'IntersectionObserver' in window) {
+      new IntersectionObserver(
+        (entries) => {
+          contactVisible = entries[0].isIntersecting;
+          updateCallbar();
+        },
+        { threshold: 0 }
+      ).observe(contact);
+    }
+
+    function updateCallbar() {
+      const pastHero = window.scrollY > Math.min(520, window.innerHeight * 0.6);
+      callbar.classList.toggle('is-visible', pastHero && !contactVisible);
+    }
+
+    let cbTicking = false;
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (cbTicking) return;
+        cbTicking = true;
+        requestAnimationFrame(() => {
+          updateCallbar();
+          cbTicking = false;
+        });
+      },
+      { passive: true }
+    );
+    updateCallbar();
+  }
+
   const io = new IntersectionObserver((entries) => {
     entries.forEach((en) => {
       if (en.isIntersecting) {
@@ -157,9 +207,39 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = $("#leadForm");
   if (!form) return;
 
+  // --- Spam guards (client side only — the request payload is unchanged) ---
+  const honeypot = $("#company");
+  const formOpenedAt = Date.now();
+  const MIN_FILL_MS = 3000; // a human cannot fill this form in under 3 seconds
+  const RESUBMIT_COOLDOWN_MS = 30000;
+  let lastSentAt = 0;
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     hideToast();
+
+    // Bot filled the invisible field, or submitted implausibly fast.
+    // Show the normal success message so scripted submitters get no signal.
+    if (
+      (honeypot && honeypot.value.trim() !== "") ||
+      Date.now() - formOpenedAt < MIN_FILL_MS
+    ) {
+      form.reset();
+      showToast(
+        "Thank you! Your request has been sent. We will contact you soon.",
+        true
+      );
+      return;
+    }
+
+    // Throttle rapid repeat submissions from the same visitor.
+    if (Date.now() - lastSentAt < RESUBMIT_COOLDOWN_MS) {
+      showToast(
+        "We already received your request. Please give us a moment, or call +1 (943) 238-9384.",
+        true
+      );
+      return;
+    }
 
     ["firstName", "phone", "email", "message"].forEach((id) => setError(id, ""));
 
@@ -188,8 +268,10 @@ document.addEventListener("DOMContentLoaded", () => {
     setLoading(true);
     try {
       const name = `${firstName} ${lastName}`.trim();
+      // Payload shape is unchanged — the Worker contract stays exactly as it was.
       await sendToWorker({ name, phone, email, message });
 
+      lastSentAt = Date.now();
       form.reset();
       if (iti) iti.setNumber("");
       showToast("Thank you! Your request has been sent. We will contact you soon.", true);

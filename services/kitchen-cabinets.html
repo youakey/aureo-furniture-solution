@@ -3,21 +3,41 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
+<!-- Content Security Policy. GitHub Pages cannot set response headers, so this is
+     the meta-tag form. It cannot express frame-ancestors / X-Frame-Options /
+     HSTS — see SECURITY-HEADERS.md for the Cloudflare rules that add those. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; frame-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.jsdelivr.net; connect-src 'self' https://aureo-leads.zerocppscript.workers.dev https://cdn.jsdelivr.net; form-action 'self'; upgrade-insecure-requests"/>
+<meta name="referrer" content="strict-origin-when-cross-origin"/>
 <title>Kitchen Cabinets Atlanta, GA | Aureo Furniture Solution</title>
 <meta content="Custom kitchen cabinet installation in Atlanta, GA. Precision fit, premium materials, clean finish. 15+ years experience. Free estimate — call (943) 238-9384." name="description"/>
-<meta name="robots" content="index, follow"/>
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1"/>
 <link rel="canonical" href="https://aureofur.com/services/kitchen-cabinets.html"/>
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="https://aureofur.com/services/kitchen-cabinets.html"/>
 <meta property="og:title" content="Kitchen Cabinets Atlanta, GA | Aureo Furniture Solution"/>
 <meta property="og:description" content="Custom kitchen cabinet installation in Atlanta, GA. Precision fit, premium materials, clean finish. Free estimate."/>
-<meta property="og:image" content="https://aureofur.com/assets/hero.webp"/>
-<link href="../assets/logo.png" rel="icon"/>
+<meta property="og:image" content="https://aureofur.com/assets/og-image.webp"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:site_name" content="Aureo Furniture Solution"/>
+<meta property="og:locale" content="en_US"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Kitchen Cabinets Atlanta, GA | Aureo Furniture Solution"/>
+<meta name="twitter:description" content="Custom kitchen cabinet installation in Atlanta, GA. Precision fit, premium materials, clean finish. Free estimate."/>
+<meta name="twitter:image" content="https://aureofur.com/assets/og-image.webp"/>
+<meta name="author" content="Aureo Furniture Solution"/>
+<meta name="theme-color" content="#0A0A0A"/>
+<meta name="geo.region" content="US-GA"/>
+<meta name="geo.placename" content="Cumming, GA"/>
+<meta name="geo.position" content="34.2073;-84.1402"/>
+<meta name="ICBM" content="34.2073, -84.1402"/>
+<link rel="icon" type="image/webp" sizes="32x32" href="../assets/favicon-32.webp"/>
+<link rel="apple-touch-icon" href="../assets/logo.webp"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.6/build/js/intlTelInput.min.js" rel="preload" as="script" crossorigin=""/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.6/build/css/intlTelInput.css" rel="stylesheet"/>
-<link href="../styles.css?v=hero1" rel="stylesheet"/>
+<link href="../styles.css?v=20260806" rel="stylesheet"/>
 
 <script type="application/ld+json">
 {
@@ -84,6 +104,32 @@
   border-color: rgba(201,162,74,.4);
 }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://aureofur.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Services",
+      "item": "https://aureofur.com/#services"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Kitchen Cabinets",
+      "item": "https://aureofur.com/services/kitchen-cabinets.html"
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <div class="bg-glow"></div>
@@ -91,7 +137,7 @@
 <header class="header" id="top">
 <div class="container header__inner">
 <a href="/" class="brand" aria-label="Aureo Furniture Solution — home" style="text-decoration:none;">
-<img alt="Aureo Furniture Solution logo" class="brand__logo" src="../assets/logo.webp"/>
+<img alt="Aureo Furniture Solution logo" class="brand__logo" src="../assets/logo.webp" width="72" height="72"/>
 <div class="brand__text">
 <div class="brand__name">Aureo Furniture Solution</div>
 <div class="brand__tag">Premium Interior Installations</div>
@@ -282,30 +328,37 @@
 <p>Fill out the form — we'll respond within one business day.</p>
 </div>
 <div class="formwrap">
-<form class="form" id="leadForm" novalidate="">
+<form class="form" id="leadForm">
 <div class="field">
 <label for="firstName"><span class="label-italic">First name</span> <span class="req">*</span></label>
-<input autocomplete="given-name" id="firstName" name="first_name" required="" type="text"/>
+<input autocomplete="given-name" id="firstName" name="first_name" required="" type="text" minlength="2" maxlength="60" pattern="[^&lt;&gt;]{2,60}" title="Please enter your first name."/>
 <div class="error" data-err-for="firstName"></div>
 </div>
 <div class="field">
 <label for="lastName"><span class="label-italic">Last name</span></label>
-<input autocomplete="family-name" id="lastName" name="last_name" type="text"/>
+<input autocomplete="family-name" id="lastName" name="last_name" type="text" maxlength="60"/>
 </div>
 <div class="field">
 <label for="phone"><span class="label-italic">Phone</span> <span class="req">*</span></label>
-<input autocomplete="tel" id="phone" name="phone" required="" type="tel"/>
+<input autocomplete="tel" id="phone" name="phone" required="" type="tel" inputmode="tel" maxlength="24" pattern="[0-9 ()+\-.]{7,24}" title="Enter a phone number, digits only (spaces, +, -, () are allowed)."/>
 <div class="error" data-err-for="phone"></div>
 </div>
 <div class="field">
 <label for="email"><span class="label-italic">Email</span> <span class="req">*</span></label>
-<input autocomplete="email" id="email" name="email" required="" type="email"/>
+<input autocomplete="email" id="email" name="email" required="" type="email" maxlength="120" pattern="[^@\s]+@[^@\s]+\.[^@\s]{2,}" title="Enter a valid email address, e.g. name@example.com."/>
 <div class="error" data-err-for="email"></div>
 </div>
 <div class="field field--full">
 <label for="message"><span class="label-italic">Describe your kitchen cabinet project…</span> <span class="req">*</span></label>
-<textarea id="message" name="message" required="" rows="6"></textarea>
+<textarea id="message" name="message" required="" rows="6" minlength="10" maxlength="2000" title="Please describe your project — at least 10 characters."></textarea>
 <div class="error" data-err-for="message"></div>
+</div>
+<!-- Honeypot: invisible to humans, irresistible to bots.
+     Checked in script.js only — it is never added to the request payload,
+     so the Cloudflare Worker contract is unchanged. -->
+<div class="hp-field" aria-hidden="true">
+<label for="company">Company (leave this field empty)</label>
+<input autocomplete="off" id="company" name="company" tabindex="-1" type="text"/>
 </div>
 <div class="actions">
 <button class="btn btn--gold" id="submitBtn" type="submit">
@@ -344,9 +397,13 @@
 </div>
 </div>
 </footer>
+<!-- Sticky mobile call CTA (shown by script.js after the hero) -->
+<button class="callbar" id="callbar" type="button" data-href="tel:+19432389384" aria-label="Call Aureo Furniture Solution at +1 (943) 238-9384">
+<span aria-hidden="true">&#9742;</span><span>Call Now &middot; (943) 238-9384</span>
+</button>
 
-<script src="../config.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.6/build/js/intlTelInput.min.js"></script>
-<script src="../script.js"></script>
+<script src="../config.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@19.5.6/build/js/intlTelInput.min.js" defer></script>
+<script src="../script.js" defer></script>
 </body>
 </html>
