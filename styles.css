@@ -555,3 +555,38 @@ body::before{ opacity:.12 !important; }
   .thank-you__main{padding-block:32px}
   .thank-you__actions .btn{width:100%}
 }
+
+/* Shared multi-page navigation and content; preserve the homepage hero. */
+.nav{gap:4px}
+.nav a[aria-current]{color:var(--gold);background:rgba(201,162,74,.08)}
+.mobile a[aria-current]{color:var(--gold)}
+.mobile__inner>a{padding:12px}
+.site-footer-nav{flex-wrap:wrap;align-items:center}
+.site-page{background:var(--bg)}
+.page-intro{padding:64px 0 48px;background:var(--bg);border-bottom:1px solid var(--stroke)}
+.page-intro h1{max-width:900px;font-size:clamp(32px,4vw,52px);line-height:1.15}
+.page-intro .lead{max-width:760px}
+.breadcrumbs{font-size:13px;color:var(--muted);margin-bottom:24px}
+.breadcrumbs a{color:var(--gold)}
+.reading-copy{max-width:800px;line-height:1.8;color:var(--muted)}
+.reading-copy h3{color:var(--text);margin-top:28px}
+.reading-copy a{color:var(--gold);text-decoration:underline;text-underline-offset:3px}
+.section-page-link{margin-top:28px}
+.project-gallery h3{font-size:20px;margin:8px 0 12px}
+.project-service{display:inline-block;color:var(--gold);font-size:14px;margin-bottom:12px}
+.site-page .tile li{line-height:1.7}
+@media(max-width:1100px){
+  .nav{display:none}
+  .burger{display:flex;flex-shrink:0}
+}
+@media(max-width:640px){
+  .brand{min-width:0}
+  .brand__name{font-size:14px}
+  .brand__tag{font-size:11px}
+  .page-intro{padding:36px 0}
+  .site-footer-nav{gap:12px 18px}
+}
+/* Keep long captions and intrinsic image sizes inside their grid columns. */
+.grid>*{min-width:0}
+.site-page .reveal{opacity:1;transform:none;transition:none}
+.project-service{display:block}

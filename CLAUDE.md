@@ -119,3 +119,9 @@ Plain static site, **no build step, no `package.json`**: raw HTML/CSS/JS. Deploy
 - `style-src 'unsafe-inline'` is still required because inline `style="…"` attributes remain in the markup. Moving them to classes would let the CSP drop it.
 - `.hero{min-height}` on mobile: an old patch set `100svh` at ≤768px but the inline `<style>` block always overrode it back to `92vh`, so `100svh` never rendered. Block 5 kept `92vh` to preserve the live appearance exactly — switching to `100svh` is available as a deliberate decision, not a bug fix.
 - Visual redesign (Block 4) — reverted, see above. The client re-authorised design work in Block 5 but explicitly chose the conservative tier, so the "generic AI site" gaps (uniform portfolio grid, flat hero composition, underused Playfair, brand motif confined to buttons) **remain open by choice**. Do not attempt the Playfair-headings / portfolio-mosaic pass again without a fresh explicit request.
+
+### Multi-page expansion (2026-11-08)
+- User requested a simple multi-page site on aureofur.com with SEO and a separate thank-you subpage; no subdomain.
+- Added `/services/`, `/about.html`, `/projects.html`, `/service-areas.html`, `/contact.html` with shared crawlable navigation, unique metadata and breadcrumbs. Existing hero, sections and service URLs preserved.
+- Contact form uses the existing Worker contract. All five forms redirect to `/thank-you.html` after success; confirmation is noindex and excluded from sitemap.
+- Sitemap now contains nine indexable URLs. Keep CSS/JS cache versions in sync across all ten public HTML files.

@@ -1,33 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- /thank-you.html is a noindex confirmation page, intentionally omitted. -->
-
-  <url>
-    <loc>https://aureofur.com/</loc>
-    <lastmod>2026-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>
-
-  <url>
-    <loc>https://aureofur.com/services/kitchen-cabinets.html</loc>
-    <lastmod>2026-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://aureofur.com/services/custom-closets.html</loc>
-    <lastmod>2026-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://aureofur.com/services/cabinet-installation.html</loc>
-    <lastmod>2026-08-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
+  <!-- /thank-you.html is noindex and intentionally omitted. -->
+  <url><loc>https://aureofur.com/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://aureofur.com/services/</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://aureofur.com/services/kitchen-cabinets.html</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://aureofur.com/services/custom-closets.html</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://aureofur.com/services/cabinet-installation.html</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://aureofur.com/projects.html</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://aureofur.com/about.html</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://aureofur.com/service-areas.html</loc><lastmod>2026-11-08</lastmod></url>
+  <url><loc>https://aureofur.com/contact.html</loc><lastmod>2026-11-08</lastmod></url>
 </urlset>

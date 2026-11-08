@@ -13,19 +13,29 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,600;0,700;1,500&amp;display=swap"/>
-<link rel="stylesheet" href="/styles.css?v=20261108"/>
+<link rel="stylesheet" href="/styles.css?v=20261108-2"/>
 </head>
 <body class="thank-you">
-<header class="header">
+<header class="header" id="top">
 <div class="container header__inner">
-<a class="brand" href="/" aria-label="Aureo Furniture Solution home">
-<img class="brand__logo" src="/assets/logo.webp" alt="Aureo Furniture Solution logo" width="72" height="72"/>
-<span class="brand__text">
-<span class="brand__name">Aureo Furniture Solution</span>
-<span class="brand__tag">Premium Interior Installations</span>
-</span>
+<a href="/" class="brand" aria-label="Aureo Furniture Solution home">
+<img alt="Aureo Furniture Solution logo" class="brand__logo" src="/assets/logo.webp" width="72" height="72"/>
+<span class="brand__text"><span class="brand__name">Aureo Furniture Solution</span><span class="brand__tag">Premium Interior Installations</span></span>
 </a>
+<nav aria-label="Primary" class="nav"><a href="/">Home</a>
+<a href="/services/">Services</a>
+<a href="/projects.html">Projects</a>
+<a href="/about.html">About</a>
+<a href="/service-areas.html">Service Areas</a>
+<a href="/contact.html" class="btn btn--ghost">Get Estimate</a></nav>
+<button type="button" aria-expanded="false" aria-controls="mobile" aria-label="Open menu" class="burger" id="burger"><span></span><span></span><span></span></button>
 </div>
+<div class="mobile" hidden id="mobile"><nav aria-label="Mobile" class="container mobile__inner"><a href="/">Home</a>
+<a href="/services/">Services</a>
+<a href="/projects.html">Projects</a>
+<a href="/about.html">About</a>
+<a href="/service-areas.html">Service Areas</a>
+<a href="/contact.html" class="btn btn--ghost">Get Estimate</a><a class="btn btn--ghost" href="tel:+19432389384">Call: +1 (943) 238-9384</a></nav></div>
 </header>
 <main class="container thank-you__main">
 <div class="thank-you__card">
@@ -35,15 +45,20 @@
 <p class="muted">Need to speak with us? Call <a href="tel:+19432389384">+1 (943) 238-9384</a>.</p>
 <div class="thank-you__actions">
 <a class="btn btn--gold" href="/">Back to Home</a>
-<a class="btn btn--ghost" href="/#portfolio">Explore Our Work</a>
+<a class="btn btn--ghost" href="/projects.html">Explore Our Work</a>
 </div>
 </div>
 </main>
-<footer class="footer">
-<div class="container footer__inner">
-<div class="footer__name">Aureo Furniture Solution</div>
-<div class="muted small">Atlanta • Cumming • Alpharetta • Roswell • Johns Creek • Sandy Springs</div>
-</div>
-</footer>
-</body>
+<footer class="footer"><div class="container footer__inner">
+<div class="footer__brand"><img alt="Aureo Furniture Solution logo" src="/assets/logo.webp" width="38" height="38" loading="lazy"/><div><div class="footer__name">Aureo Furniture Solution</div><div class="muted small">Cabinetry &amp; Interior Installations · Atlanta, GA</div></div></div>
+<nav class="footer__links site-footer-nav" aria-label="Footer"><a href="/">Home</a>
+<a href="/services/">Services</a>
+<a href="/projects.html">Projects</a>
+<a href="/about.html">About</a>
+<a href="/service-areas.html">Service Areas</a>
+<a href="/contact.html" class="btn btn--ghost">Get Estimate</a></nav>
+<nav class="footer__links site-footer-nav" aria-label="Services"><a href="/services/kitchen-cabinets.html">Kitchen Cabinets</a><a href="/services/custom-closets.html">Custom Closets</a><a href="/services/cabinet-installation.html">Cabinet Installation</a></nav>
+<div class="footer__meta muted small"><div>Mon–Sat: 8 AM – 5 PM</div><div><a href="tel:+19432389384">+1 (943) 238-9384</a></div><div><a href="mailto:aureofur@gmail.com">aureofur@gmail.com</a></div></div>
+</div></footer>
+<script src="/script.js?v=20261108-2" defer></script></body>
 </html>

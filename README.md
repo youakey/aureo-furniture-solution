@@ -10,6 +10,11 @@ commit, push — GitHub Pages serves them. Cloudflare sits in front for DNS and 
 
 ```
 index.html                        homepage — LocalBusiness + FAQPage JSON-LD
+services/index.html              service overview and links to the three service pages
+about.html                       company and approach
+projects.html                    project portfolio
+service-areas.html               six supported communities and visit planning
+contact.html                     contact details and lead form
 services/kitchen-cabinets.html    one page per service, each with its own
 services/custom-closets.html      title / description / H1 / Service + BreadcrumbList JSON-LD
 services/cabinet-installation.html
@@ -42,10 +47,10 @@ git add -A && git commit -m "…" && git push
 ```
 
 GitHub Pages publishes from `main`. If you changed `styles.css` or `script.js`,
-bump the cache-buster in all four HTML files at once:
+bump the cache-buster in all public HTML files together (including services/index.html):
 
 ```bash
-sed -i '' 's/?v=20260806/?v=YYYYMMDD/g' index.html services/*.html
+# Keep the styles.css and script.js version strings in sync in *.html and services/*.html.
 ```
 
 ## Lead form → Telegram
@@ -81,7 +86,7 @@ verification belong in the Worker — see `SECURITY-HEADERS.md`.
 ## Conventions
 
 - The business name is **"Aureo Furniture Solution"** — singular. Never "Solutions".
-- One service = one page. New page → add it to `sitemap.xml`.
+- One service = one page. New indexable page → add it to `sitemap.xml`; keep the noindex confirmation page out.
 - Homepage and JSON-LD `areaServed` list exactly six cities: Atlanta, Cumming,
   Alpharetta, Roswell, Johns Creek, Sandy Springs.
 - Every `<img>` needs a descriptive, keyword-bearing `alt`, plus `width`/`height`
@@ -89,3 +94,13 @@ verification belong in the Worker — see `SECURITY-HEADERS.md`.
 - The visual concept — dark `#070707`, gold `#c9a24a`, the pine-cone logo, the hero
   composition — is frozen. See the Design Discipline section of `CLAUDE.md` before
   changing anything visual.
+
+## Multi-page structure
+
+All pages use ordinary HTML links in the shared header and footer. The homepage
+keeps its existing sections and hero, with links into the dedicated sections.
+Existing service URLs and homepage section anchors are preserved. Each indexable
+page has its own title, description, canonical URL and social metadata; new pages
+include breadcrumb structured data. The sitemap lists nine indexable URLs.
+The contact page reuses the existing lead form and Worker integration, including
+the redirect to `/thank-you.html` after success. No additional runtime is needed.

@@ -39,7 +39,7 @@ if (burger && mobile) {
     mobile.hidden = o;
   });
   mobile.addEventListener("click", (e) => {
-    if (e.target.closest("button[data-href]")) {
+    if (e.target.closest("a[href], button[data-href]")) {
       burger.setAttribute("aria-expanded", "false");
       mobile.hidden = true;
     }
