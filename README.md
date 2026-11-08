@@ -13,6 +13,7 @@ index.html                        homepage — LocalBusiness + FAQPage JSON-LD
 services/kitchen-cabinets.html    one page per service, each with its own
 services/custom-closets.html      title / description / H1 / Service + BreadcrumbList JSON-LD
 services/cabinet-installation.html
+thank-you.html                    confirmation after a successful lead submission (noindex)
 styles.css                        the single stylesheet (read to the end — later
                                   blocks intentionally override earlier ones)
 script.js                         nav, phone input, scroll reveal, sticky call bar, lead form
@@ -52,6 +53,10 @@ sed -i '' 's/?v=20260806/?v=YYYYMMDD/g' index.html services/*.html
 ```
 #leadForm → script.js sendToWorker() → POST {proxyUrl}/lead → Cloudflare Worker → Telegram Bot API
 ```
+
+After a successful Worker response, every lead form redirects to `/thank-you.html`.
+Validation failures, network/server errors, and spam guards do not redirect. The
+confirmation page is `noindex, follow` and intentionally excluded from the sitemap.
 
 `config.js` holds only the public Worker URL:
 

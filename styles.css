@@ -542,3 +542,16 @@ body::before{ opacity:.12 !important; }
   opacity:0;
   pointer-events:none;
 }
+
+/* Lead submission confirmation */
+.thank-you{display:flex;flex-direction:column;min-height:100%;background:var(--bg)}
+.thank-you__main{flex:1;display:grid;place-items:center;padding-block:64px}
+.thank-you__card{width:100%;max-width:720px;padding:clamp(24px,5vw,56px);background:var(--bg);border:1px solid var(--stroke);border-radius:var(--radius2)}
+.thank-you__card h1{font-size:clamp(32px,6vw,52px);line-height:1.15}
+.thank-you__card .muted a{color:var(--gold);text-decoration:underline;text-underline-offset:3px}
+.thank-you__actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+@media(max-width:480px){
+  .thank-you .brand{min-width:0}
+  .thank-you__main{padding-block:32px}
+  .thank-you__actions .btn{width:100%}
+}

@@ -274,7 +274,7 @@ document.addEventListener("DOMContentLoaded", () => {
       lastSentAt = Date.now();
       form.reset();
       if (iti) iti.setNumber("");
-      showToast("Thank you! Your request has been sent. We will contact you soon.", true);
+      window.location.assign("/thank-you.html");
     } catch (err) {
       console.error(err);
       showToast("Sorry — something went wrong. Please call us at +1 (943) 238-9384.", false);
