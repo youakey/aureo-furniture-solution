@@ -22,6 +22,7 @@ thank-you.html                    confirmation after a successful lead submissio
 styles.css                        the single stylesheet (read to the end — later
                                   blocks intentionally override earlier ones)
 script.js                         nav, phone input, scroll reveal, sticky call bar, lead form
+analytics.js                      shared GTM bootstrap on all public pages
 config.js                         one line: the Cloudflare Worker URL. No secrets.
 assets/                           hero, logo, og-image, portfolio/p1…p6 (all .webp)
 sitemap.xml robots.txt CNAME      update sitemap.xml whenever a page is added
@@ -104,3 +105,8 @@ page has its own title, description, canonical URL and social metadata; new page
 include breadcrumb structured data. The sitemap lists nine indexable URLs.
 The contact page reuses the existing lead form and Worker integration, including
 the redirect to `/thank-you.html` after success. No additional runtime is needed.
+
+Google Tag Manager container `GTM-WPVW74DV` loads on all ten public pages, including
+`/thank-you.html`. Google Ads conversion triggers are managed in GTM. Keep the
+CSP meta tags and any Cloudflare CSP response header aligned with
+`SECURITY-HEADERS.md` when changing tags.

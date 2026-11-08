@@ -26,12 +26,13 @@ Cloudflare dashboard → **aureofur.com** → **Rules** → **Transform Rules** 
 | `Content-Security-Policy` | see the single line below |
 
 ```
-default-src 'self'; base-uri 'none'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.jsdelivr.net; connect-src 'self' https://aureo-leads.zerocppscript.workers.dev https://cdn.jsdelivr.net; form-action 'self'; upgrade-insecure-requests
+default-src 'self'; base-uri 'none'; object-src 'none'; frame-src https://www.googletagmanager.com; frame-ancestors 'none'; script-src 'self' https://cdn.jsdelivr.net https://www.googletagmanager.com https://tagmanager.google.com https://www.googleadservices.com https://www.google.com https://googleads.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://www.googletagmanager.com https://tagmanager.google.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https://cdn.jsdelivr.net https://ssl.gstatic.com https://www.gstatic.com https://www.googletagmanager.com https://*.google-analytics.com https://www.googleadservices.com https://www.google.com https://*.g.doubleclick.net https://pagead2.googlesyndication.com https://ad.doubleclick.net; connect-src 'self' https://aureo-leads.zerocppscript.workers.dev https://cdn.jsdelivr.net https://www.googletagmanager.com https://*.google-analytics.com https://www.googleadservices.com https://www.google.com https://*.g.doubleclick.net https://pagead2.googlesyndication.com https://ad.doubleclick.net; form-action 'self'; upgrade-insecure-requests
 ```
 
 Once the header version is live you can delete the `<meta http-equiv="Content-Security-Policy">`
-tags from the four HTML files — a real header always wins and is strictly more capable.
-Until then, keep both; they are identical apart from `frame-ancestors`.
+tags from all public HTML files if desired. If both are present, browsers enforce
+both policies: neither can loosen the other. Keep their source lists synchronized.
+The header adds `frame-ancestors` to the shared meta policy.
 
 > **Enable HSTS only after you are certain** every subdomain of `aureofur.com` is
 > HTTPS-only. `preload` in particular is difficult to undo.
@@ -86,3 +87,25 @@ for a static site — do not move credentials into `config.js`.
 
 The browser-side guards stop commodity spam bots. They do not stop anyone who
 reads `script.js`. Server-side rate limiting on the Worker is the real control.
+
+## Google Tag Manager / Ads (2026-11-08)
+
+Every public page, including `/thank-you.html`, loads `/analytics.js`, which
+initializes the data layer with the standard `gtm.js` event before loading container
+`GTM-WPVW74DV`. Do not add a second GTM or gtag bootstrap to individual pages.
+The Google Ads conversion remains configured in GTM with the existing thank-you
+page-view trigger; no duplicate conversion event is sent from the form handler.
+
+The source lists above allow GTM, Preview Mode assets, GA4 and Google Ads
+conversion/linker requests. The `googleads.g.doubleclick.net` script source is
+required by the view-through conversion request observed in Tag Assistant.
+No `unsafe-eval` or inline executable scripts are required by this bootstrap.
+If a container uses Custom JavaScript variables, prefer GTM Custom Templates
+rather than enabling `unsafe-eval` globally.
+
+Reference: https://developers.google.com/tag-platform/security/guides/csp
+
+To verify: open GTM Preview, submit a valid form, then confirm that the thank-you
+page loads this container, the configured conversion tag fires once, and Tag
+Assistant reports no CSP violations. Do not submit real conversion beacons from
+automated tests; stub the Google endpoints.
