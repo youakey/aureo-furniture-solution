@@ -1,0 +1,8 @@
+{
+  "name": "aureo-kitchen-dna",
+  "compatibility_date": "2026-11-17",
+  "pages_build_output_dir": "./dist",
+  "services": [
+    { "binding": "LEADS", "service": "aureo-leads" }
+  ]
+}
