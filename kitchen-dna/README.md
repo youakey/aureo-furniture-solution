@@ -25,3 +25,10 @@ In the Pages project, add `dna.aureofur.com` under **Custom domains**. At the DN
 The quiz posts to same-origin `/api/lead`. The Pages Worker validates the request and forwards `name`, `email`, `phone` and `message` to the existing `aureo-leads` service binding. The message includes campaign attribution and a summary of quiz answers. The quiz confirms delivery after an affirmative response from the lead Worker.
 
 If the lead Worker enforces an origin allowlist for POST requests, add the production landing origin alongside the existing origins. The lead Worker owns the Telegram credentials and destination.
+
+## Meta Pixel
+
+`public/meta-pixel.js` initializes pixel `2214716746140654` and sends `PageView`.
+After `/api/lead` confirms success, the quiz sends `Lead` with the submission key
+as `eventID`. Failed requests and local result previews do not send a lead.
+Keep the pixel file identical to `../meta-pixel.js`; do not duplicate it in GTM.

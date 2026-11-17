@@ -69,5 +69,6 @@ export async function shareKitchenDnaLead(draft) {
 
   const result = await response.json().catch(() => null);
   if (!response.ok || result?.ok !== true) throw new Error(SEND_ERROR);
+  window.aureoMetaPixel?.trackLead(draft.submissionKey);
   return { id: draft.submissionKey };
 }
