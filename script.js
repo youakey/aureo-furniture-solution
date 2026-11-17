@@ -274,7 +274,8 @@ document.addEventListener("DOMContentLoaded", () => {
       lastSentAt = Date.now();
       form.reset();
       if (iti) iti.setNumber("");
-      window.location.assign("/thank-you.html");
+      if (window.aureoMetaPixel) window.aureoMetaPixel.redirectAfterLead();
+      else window.location.assign("/thank-you.html");
     } catch (err) {
       console.error(err);
       showToast("Sorry — something went wrong. Please call us at +1 (943) 238-9384.", false);

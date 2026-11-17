@@ -23,6 +23,7 @@ styles.css                        the single stylesheet (read to the end — lat
                                   blocks intentionally override earlier ones)
 script.js                         nav, phone input, scroll reveal, sticky call bar, lead form
 analytics.js                      shared GTM bootstrap on all public pages
+meta-pixel.js                     Meta Pixel and confirmed Lead tracking
 config.js                         one line: the Cloudflare Worker URL. No secrets.
 assets/                           hero, logo, og-image, portfolio/p1…p6 (all .webp)
 sitemap.xml robots.txt CNAME      update sitemap.xml whenever a page is added
@@ -110,3 +111,26 @@ Google Tag Manager container `GTM-WPVW74DV` loads on all ten public pages, inclu
 `/thank-you.html`. Google Ads conversion triggers are managed in GTM. Keep the
 CSP meta tags and any Cloudflare CSP response header aligned with
 `SECURITY-HEADERS.md` when changing tags.
+
+## Meta Pixel
+
+Pixel `2214716746140654` sends `PageView` on all ten public pages and the
+Kitchen DNA landing page. `Lead` is sent only after the lead endpoint confirms
+success. Main-site forms store a short-lived, one-use marker in session storage
+and send the event on `/thank-you.html`, so navigation does not discard the SDK
+queue. Direct visits and refreshes of that page do not send another `Lead`.
+If storage is unavailable, the form sends the event before a delayed redirect.
+Kitchen DNA sends `Lead` after `/api/lead` returns `{ ok: true }`, using the
+submission key as the event ID and suppressing repeats in the current session.
+Contact details and quiz answers are not included in the explicit pixel events.
+
+Keep `meta-pixel.js` and `kitchen-dna/public/meta-pixel.js` identical. Do not also
+install this pixel or a Lead tag in GTM: this implementation owns both events.
+If Cloudflare sets a CSP response header, update it from `SECURITY-HEADERS.md`
+alongside the HTML meta policies; a response header can still block Meta.
+
+After publishing, check pixel `2214716746140654` in Meta Events Manager → Test
+Events: a page visit should show `PageView`, and a successfully delivered form
+should show one `Lead`. Refreshing the confirmation page, invalid forms and
+server failures should not show additional leads. Choose this pixel and the
+`Lead` event in the advertising campaign's conversion settings.

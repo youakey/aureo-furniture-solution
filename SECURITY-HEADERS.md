@@ -26,7 +26,7 @@ Cloudflare dashboard → **aureofur.com** → **Rules** → **Transform Rules** 
 | `Content-Security-Policy` | see the single line below |
 
 ```
-default-src 'self'; base-uri 'none'; object-src 'none'; frame-src https://www.googletagmanager.com; frame-ancestors 'none'; script-src 'self' https://cdn.jsdelivr.net https://www.googletagmanager.com https://tagmanager.google.com https://www.googleadservices.com https://www.google.com https://googleads.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://www.googletagmanager.com https://tagmanager.google.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https://cdn.jsdelivr.net https://ssl.gstatic.com https://www.gstatic.com https://www.googletagmanager.com https://*.google-analytics.com https://www.googleadservices.com https://www.google.com https://*.g.doubleclick.net https://pagead2.googlesyndication.com https://ad.doubleclick.net; connect-src 'self' https://aureo-leads.zerocppscript.workers.dev https://cdn.jsdelivr.net https://www.googletagmanager.com https://*.google-analytics.com https://www.googleadservices.com https://www.google.com https://*.g.doubleclick.net https://pagead2.googlesyndication.com https://ad.doubleclick.net; form-action 'self'; upgrade-insecure-requests
+default-src 'self'; base-uri 'none'; object-src 'none'; frame-src https://www.googletagmanager.com; frame-ancestors 'none'; script-src 'self' https://connect.facebook.net https://cdn.jsdelivr.net https://www.googletagmanager.com https://tagmanager.google.com https://www.googleadservices.com https://www.google.com https://googleads.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://www.googletagmanager.com https://tagmanager.google.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https://www.facebook.com https://cdn.jsdelivr.net https://ssl.gstatic.com https://www.gstatic.com https://www.googletagmanager.com https://*.google-analytics.com https://www.googleadservices.com https://www.google.com https://*.g.doubleclick.net https://pagead2.googlesyndication.com https://ad.doubleclick.net; connect-src 'self' https://www.facebook.com https://connect.facebook.net https://aureo-leads.zerocppscript.workers.dev https://cdn.jsdelivr.net https://www.googletagmanager.com https://*.google-analytics.com https://www.googleadservices.com https://www.google.com https://*.g.doubleclick.net https://pagead2.googlesyndication.com https://ad.doubleclick.net; form-action 'self'; upgrade-insecure-requests
 ```
 
 Once the header version is live you can delete the `<meta http-equiv="Content-Security-Policy">`
@@ -109,3 +109,14 @@ To verify: open GTM Preview, submit a valid form, then confirm that the thank-yo
 page loads this container, the configured conversion tag fires once, and Tag
 Assistant reports no CSP violations. Do not submit real conversion beacons from
 automated tests; stub the Google endpoints.
+
+## Meta Pixel (2026-11-17)
+
+The HTML policies and the recommended response header above allow
+`https://connect.facebook.net` in `script-src`, `https://www.facebook.com` in
+`img-src`, and both origins in `connect-src`. Apply the updated response header
+in Cloudflare if one is configured; changing an HTML policy cannot relax it.
+`/meta-pixel.js` loads pixel `2214716746140654` independently of GTM and sends
+explicit `PageView` and confirmed `Lead` events. Automatic event configuration
+is disabled. Keep GTM free of duplicate tags for this pixel. Stub Meta's SDK and
+tracking endpoints in automated checks to avoid recording synthetic conversions.
